@@ -1,0 +1,21 @@
+pkgbase = pike
+	pkgdesc = Dynamic programming language with a syntax similar to Java and C
+	pkgver = 8.0.610
+	pkgrel = 1
+	url = http://pike.lysator.liu.se
+	arch = x86_64
+	license = GPL2
+	license = LGPL
+	license = MPL
+	depends = sane
+	depends = libzip
+	depends = libmariadbclient
+	depends = gtkglarea
+	depends = nettle
+	source = http://pike.lysator.liu.se/pub/pike/all/8.0.610/Pike-v8.0.610.tar.gz
+	source = pike.patch
+	sha256sums = 6eeb410caf56ff4a209a06db29f003208d507680f7c17c0fd93c15f48b5edf53
+	sha256sums = c0637074c58e34a3befe6852ea1395073d188a087b59549d637fe7f16fc6d2bf
+
+pkgname = pike
+
