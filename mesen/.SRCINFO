@@ -1,0 +1,16 @@
+pkgbase = mesen
+	pkgdesc = A cross-platform NES/Famicom emulator
+	pkgver = 0.9.6
+	pkgrel = 1
+	url = https://github.com/SourMesen/Mesen
+	arch = x86_64
+	license = GPL3
+	makedepends = clang
+	makedepends = gendesk
+	depends = mono
+	depends = sdl2
+	source = https://github.com/SourMesen/Mesen/archive/0.9.6.tar.gz
+	sha256sums = d5d3617971a12c88e38edb64a4a1fea33010722f0029894f627e58b0ed148a3a
+
+pkgname = mesen
+
