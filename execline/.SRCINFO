@@ -1,0 +1,14 @@
+pkgbase = execline
+	pkgdesc = A (non-interactive) scripting language, like sh
+	pkgver = 2.5.3.0
+	pkgrel = 1
+	url = http://skarnet.org/software/execline
+	arch = i686
+	arch = x86_64
+	license = ISC
+	depends = skalibs
+	source = http://skarnet.org/software/execline/execline-2.5.3.0.tar.gz
+	sha256sums = 05205c6869ae65a51c63d0e805572573806f6474aa21e12c49dd5654d3ceed33
+
+pkgname = execline
+
