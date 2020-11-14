@@ -1,0 +1,32 @@
+pkgbase = gfeeds
+	pkgdesc = An RSS/Atom feed reader for GNOME
+	pkgver = 0.16.1
+	pkgrel = 1
+	url = https://gabmus.gitlab.io/gnome-feeds
+	arch = x86_64
+	license = GPL3
+	makedepends = meson
+	makedepends = gobject-introspection
+	depends = appstream
+	depends = python-html5lib
+	depends = webkit2gtk
+	depends = python-gobject
+	depends = python-pillow
+	depends = python-feedparser
+	depends = python-listparser
+	depends = python-lxml
+	depends = python-readability-lxml
+	depends = libhandy
+	depends = python-dateutil
+	depends = python-pytz
+	depends = python-beautifulsoup4
+	depends = python-pygments
+	provides = gnome-feeds
+	conflicts = gnome-feeds
+	conflicts = gnome-feeds-git
+	conflicts = gfeeds-git
+	source = https://gitlab.com/gabmus/gnome-feeds/-/archive/0.16.1/gnome-feeds-0.16.1.tar.gz
+	sha256sums = 11f150fa7fb743ded928db29efd8abcf59f068237cf3b27bc60061719b47a55c
+
+pkgname = gfeeds
+
