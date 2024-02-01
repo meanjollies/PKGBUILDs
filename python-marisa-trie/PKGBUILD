@@ -1,18 +1,18 @@
-# Maintainer:  Andrew O'Neill <andrew at meanjollies dot com>
+# Maintainer:  Andrew O'Neill <andrew at haunted dot sh>
 # Contributor: Mark E.A. <evalapply ``dot'' aur ``at'' airmail ``dot'' cc>
 
 pkgname=python-marisa-trie
 _pyname=marisa-trie
-pkgver=0.7.8
+pkgver=1.1.0
 pkgrel=1
 pkgdesc='Static memory-efficient & fast Trie-like structures for Python (based on marisa-trie C++ library)'
 arch=('any')
-url='https://github.com/pytries/marisa-trie'
+url="https://github.com/pytries/${_pyname}"
 license=('MIT')
 depends=('python')
 makedepends=('cython' 'python-pip' 'python-setuptools' 'python-wheel')
 source=("https://files.pythonhosted.org/packages/source/m/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('aee3de5f2836074cfd803f1caf16f68390f262ef09cd7dc7d0e8aee9b6878643')
+sha256sums=('5bf43ed0cf36af4578fe7b034cf95f532439766516680e4bd603723611ebd56b')
 
 build() {
   cd "${_pyname}-${pkgver}"
