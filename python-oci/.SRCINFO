@@ -1,10 +1,10 @@
 pkgbase = python-oci
 	pkgdesc = Python SDK for Oracle Cloud Infrastructure
-	pkgver = 2.118.0
+	pkgver = 2.120.0
 	pkgrel = 1
 	url = https://github.com/oracle/oci-python-sdk
 	arch = x86_64
-	license = Apache
+	license = Apache-2.0 OR UPL-1.0
 	makedepends = python-setuptools
 	depends = python
 	depends = python-dateutil
@@ -13,7 +13,7 @@ pkgbase = python-oci
 	depends = python-cryptography
 	depends = python-pyopenssl
 	depends = python-pytz
-	source = python-oci-2.118.0.tar.gz::https://github.com/oracle/oci-python-sdk/archive/v2.118.0.tar.gz
-	sha256sums = bbda5678c9130a3543174ced58b7ab055c5c109a57c5e830cc2be9a816413da4
+	source = python-oci-2.120.0.tar.gz::https://github.com/oracle/oci-python-sdk/archive/v2.120.0.tar.gz
+	sha256sums = 95974782dbee0be9b2e8da19d2d56851702bd5f141b897d89280677f78131f50
 
 pkgname = python-oci
