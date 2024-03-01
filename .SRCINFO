@@ -1,0 +1,14 @@
+pkgbase = dnsperf
+	pkgdesc = Tools that measure performance of authoritative Domain Name services
+	pkgver = 2.11.2
+	pkgrel = 2
+	url = https://www.dns-oarc.net/tools/dnsperf
+	arch = x86_64
+	license = Apache-2.0
+	depends = ldns
+	depends = libck
+	depends = libnghttp2
+	source = https://www.dns-oarc.net/files/dnsperf/dnsperf-2.11.2.tar.gz
+	b2sums = bbfab92b59b14b8622d80dd92d616f837df4c829cb97de3673b178d2e4583d5660d2d78d91c9bbb28d42038e92f7150f06bbe28521c69ec3140338ca87f48fc0
+
+pkgname = dnsperf
