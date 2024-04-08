@@ -7,7 +7,7 @@
 pkgname=fim
 _pkgver='trunk'
 pkgver=0.7
-pkgrel=2
+pkgrel=3
 pkgdesc='FIM (Fbi IMproved) is a highly customizable and scriptable image viewer.'
 arch=('i686' 'x86_64')
 url='https://www.nongnu.org/fbi-improved/'
@@ -23,14 +23,7 @@ optdepends=('aalib: ASCII art support'
             'libtiff: TIFF support'
             'sdl: X support')
 source=("http://download.savannah.gnu.org/releases/fbi-improved/${pkgname}-${pkgver}-${_pkgver}.tar.gz")
-sha256sums=('f5b2442c67d0111bfefc06ee8a00c923fe9b992efd62b9c070e191f7d83c07ea')
-
-prepare() {
-  cd "${pkgname}-${pkgver}-${_pkgver}"
-
-  sed -i 's/fim_handle_webp =no/fim_handle_webp=no/g' configure.ac
-  sed -i 's/fim_handle_webp =no/fim_handle_webp=no/g' configure
-}
+sha256sums=('8af50eb3d073250d3707fde3e648875eb0f71e298d5079b6e6fec3bcadc6b098')
 
 build() {
   cd "${pkgname}-${pkgver}-${_pkgver}"
