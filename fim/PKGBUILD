@@ -5,9 +5,8 @@
 # Contributor: daniel <quite a hack org>
 
 pkgname=fim
-_pkgver='trunk'
-pkgver=0.7
-pkgrel=3
+pkgver=0.7.0
+pkgrel=1
 pkgdesc='FIM (Fbi IMproved) is a highly customizable and scriptable image viewer.'
 arch=('i686' 'x86_64')
 url='https://www.nongnu.org/fbi-improved/'
@@ -22,11 +21,11 @@ optdepends=('aalib: ASCII art support'
             'libspectre: postscript support'
             'libtiff: TIFF support'
             'sdl: X support')
-source=("http://download.savannah.gnu.org/releases/fbi-improved/${pkgname}-${pkgver}-${_pkgver}.tar.gz")
-sha256sums=('8af50eb3d073250d3707fde3e648875eb0f71e298d5079b6e6fec3bcadc6b098')
+source=("http://download.savannah.gnu.org/releases/fbi-improved/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('44cf99e37ff93a219734fb379128a7714c4a8e689f06338c7e479dc949ad53ff')
 
 build() {
-  cd "${pkgname}-${pkgver}-${_pkgver}"
+  cd "${pkgname}-${pkgver}"
 
   PKG_CONFIG=/usr/bin/pkg-config ./configure \
     LIBS=-lpthread --prefix=/usr --disable-debug \
@@ -36,7 +35,7 @@ build() {
 }
 
 package() {
-  cd "${pkgname}-${pkgver}-${_pkgver}"
+  cd "${pkgname}-${pkgver}"
 
   make DESTDIR=${pkgdir} install
 }
