@@ -3,12 +3,13 @@
 
 pkgname=s6
 pkgver=2.12.0.4
-pkgrel=1
+pkgrel=2
 pkgdesc='A small suite of programs for UNIX, designed to allow process supervision'
 arch=('x86_64')
 url="http://skarnet.org/software/${pkgname}"
 license=('ISC')
 depends=('skalibs' 'execline')
+options=('!lto')
 source=("${url}/${pkgname}-${pkgver}.tar.gz")
 sha256sums=('c95d51787602e0c8c8e4f92a710cbdaa4ee797ee886e71342727e2974f95c06b')
 
