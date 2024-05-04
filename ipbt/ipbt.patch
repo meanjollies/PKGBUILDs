@@ -1,7 +1,7 @@
-diff -rupN ipbt-20220403.d4e7fcd/unix/ipbt.c ipbt-20220403.d4e7fcdb/unix/ipbt.c
---- ipbt-20220403.d4e7fcd/unix/ipbt.c	2022-04-02 21:10:02.000000000 -0400
-+++ ipbt-20220403.d4e7fcdb/unix/ipbt.c	2022-04-05 20:35:38.918153147 -0400
-@@ -16,18 +16,7 @@
+diff -rupN ipbt-20240501.bc876ea/unix/ipbt.c ipbt-20240501.bc876eab/unix/ipbt.c
+--- ipbt-20240501.bc876ea/unix/ipbt.c	2024-04-30 21:10:02
++++ ipbt-20240501.bc876eab/unix/ipbt.c	2024-05-03 13:56:59
+@@ -17,18 +17,7 @@
  
  #define _XOPEN_SOURCE_EXTENDED
  
