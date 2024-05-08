@@ -2,8 +2,8 @@
 # Contributor: Mark E.A. <evalapply ``dot'' aur ``at'' airmail ``dot'' cc>
 
 pkgname=python-marisa-trie
-_pyname=marisa-trie
-pkgver=1.1.0
+_pyname=marisa_trie
+pkgver=1.1.1
 pkgrel=1
 pkgdesc='Static memory-efficient & fast Trie-like structures for Python (based on marisa-trie C++ library)'
 arch=('any')
@@ -11,8 +11,8 @@ url="https://github.com/pytries/${_pyname}"
 license=('MIT')
 depends=('python')
 makedepends=('cython' 'python-pip' 'python-setuptools' 'python-wheel')
-source=("https://files.pythonhosted.org/packages/source/m/${_pyname}/${_pyname}-${pkgver}.tar.gz")
-sha256sums=('5bf43ed0cf36af4578fe7b034cf95f532439766516680e4bd603723611ebd56b')
+source=("https://files.pythonhosted.org/packages/c9/5d/2cb545ed5896a8cf9a1994dbfb794d20371d774193f1cb0bfa395da73e10/${_pyname}-${pkgver}.tar.gz")
+sha256sums=('363f1be2314b1f9e26b5a3de45b59fd9a0a3289bf157be61bbed770643a46f1a')
 
 build() {
   cd "${_pyname}-${pkgver}"
