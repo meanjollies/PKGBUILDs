@@ -6,7 +6,7 @@
 
 pkgname=afnix
 pkgver=3.8.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Multi-threaded functional programming language'
 arch=('x86_64')
 url='http://www.afnix.org'
@@ -15,7 +15,7 @@ depends=('ncurses' 'gcc-libs')
 source=("${url}/ftp/afnix-src-${pkgver}.tgz"
         "${pkgname}.patch")
 sha256sums=('63a8e7e0dc8670a548531d7a78a7922282f6dd10c5fc4526f9c1821e1928c8f4'
-            '8f1f23357bae78782e6e48a0648ee2932fb9544d9692d21a2dd5c0840cfa50a8')
+            '3b306cc3373846d4047f958ec32313890901ebce252c415f6e9beb2f803fe007')
 
 prepare() {
   patch -p0 -i ../${pkgname}.patch

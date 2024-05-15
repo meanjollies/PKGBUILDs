@@ -1,11 +1,11 @@
 diff -rupN afnix-src-3.8.0/cnf/bin/afnix-vcomp afnix-src-3.8.0b/cnf/bin/afnix-vcomp
 --- afnix-src-3.8.0/cnf/bin/afnix-vcomp	2023-01-13 17:44:45.000000000 -0500
-+++ afnix-src-3.8.0b/cnf/bin/afnix-vcomp	2023-05-03 22:06:13.334413599 -0400
++++ afnix-src-3.8.0b/cnf/bin/afnix-vcomp	2024-05-14 04:48:41.930904917 -0400
 @@ -118,6 +118,7 @@ getccm () {
         10*) ccvers=10 ;;
         11*) ccvers=11 ;;
         12*) ccvers=12 ;;
-+       13*) ccvers=13 ;;
++       14*) ccvers=14 ;;
  	esac
      fi
      # check for g++ version
@@ -13,13 +13,13 @@ diff -rupN afnix-src-3.8.0/cnf/bin/afnix-vcomp afnix-src-3.8.0b/cnf/bin/afnix-vc
         10*) ccvers=10 ;;
         11*) ccvers=11 ;;
         12*) ccvers=12 ;;
-+       13*) ccvers=13 ;;
++       14*) ccvers=14 ;;
  	esac
      fi
      # check for clang version
-diff -rupN afnix-src-3.8.0/cnf/mak/afnix-gc13.mak afnix-src-3.8.0b/cnf/mak/afnix-gc13.mak
---- afnix-src-3.8.0/cnf/mak/afnix-gc13.mak	1969-12-31 19:00:00.000000000 -0500
-+++ afnix-src-3.8.0b/cnf/mak/afnix-gc13.mak	2023-05-03 22:07:49.348035381 -0400
+diff -rupN afnix-src-3.8.0/cnf/mak/afnix-gc14.mak afnix-src-3.8.0b/cnf/mak/afnix-gc14.mak
+--- afnix-src-3.8.0/cnf/mak/afnix-gc14.mak	1969-12-31 19:00:00.000000000 -0500
++++ afnix-src-3.8.0b/cnf/mak/afnix-gc14.mak	2024-05-14 04:52:09.453874304 -0400
 @@ -0,0 +1,177 @@
 +# ----------------------------------------------------------------------------
 +# - afnix-gcc12                                                              -
@@ -72,7 +72,7 @@ diff -rupN afnix-src-3.8.0/cnf/mak/afnix-gc13.mak afnix-src-3.8.0b/cnf/mak/afnix
 +PFLDEFINES	= -DAFNIX_DEBUG -DAFNIX_PROFILED
 +STDINCLUDE      =
 +AFXCPPTYPE	= GNU
-+AFXCPPVERS	= 13
++AFXCPPVERS	= 14
 +
 +# ----------------------------------------------------------------------------
 +# - compiler dependant libraries                                             -
