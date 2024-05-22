@@ -1,7 +1,7 @@
 # Maintainer: Andrew O'Neill <andrew at haunted dot sh>
 
 pkgname=satdump
-pkgver=1.1.4
+pkgver=1.2.0
 pkgrel=1
 pkgdesc='A generic satellite processing software'
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('airspy' 'fftw' 'glfw' 'hackrf' 'jemalloc' 'libad9361' 'libpng' 'libvol
 makedepends=('boost' 'cmake' 'opencl-headers')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
 optdepends=('limesuite' 'bladerf')
-sha256sums=('ae466e8205de8848b2c57b74b7fdd1baf07ddd4fcafa14296a86e48ffb945d77')
+sha256sums=('099d51864a0a3e374b0d12a9ad13d8ac263b9ab0cb88d4e5b08c2b72b9afb20e')
 
 build() {
   cd "SatDump-${pkgver}"
