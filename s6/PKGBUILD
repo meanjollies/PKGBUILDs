@@ -2,7 +2,7 @@
 # Contributor: Josh VanderLinden <arch@cloudlery.com>
 
 pkgname=s6
-pkgver=2.12.0.4
+pkgver=2.13.0.0
 pkgrel=2
 pkgdesc='A small suite of programs for UNIX, designed to allow process supervision'
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('ISC')
 depends=('skalibs' 'execline')
 options=('!lto')
 source=("${url}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('c95d51787602e0c8c8e4f92a710cbdaa4ee797ee886e71342727e2974f95c06b')
+sha256sums=('7e46f8f55d80bb0e2025a64d5d649af4a4ac21e348020caaadde30ba5e5b4830')
 
 build() {
   cd "${pkgname}-${pkgver}"
