@@ -1,0 +1,3 @@
+[libck]
+source = "git"
+git = "https://github.com/concurrencykit/ck.git"
