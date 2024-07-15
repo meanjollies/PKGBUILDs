@@ -3,7 +3,7 @@
 
 pkgname=regina-normal
 pkgver=7.3
-pkgrel=1
+pkgrel=2
 pkgdesc='Software for low-dimensional topology'
 arch=('x86_64')
 url='https://regina-normal.github.io'
@@ -21,6 +21,7 @@ prepare() {
 
   sed -i '45 i #include <stdint.h>' engine/utilities/stringutils.h
   sed -i '44 i #include <stdint.h>' engine/triangulation/facepair.h
+  sed -i 's/"gvc.h"/"graphviz\/gvc.h"/' qtui/src/packets/linkgraph.cpp qtui/src/packets/facetgraphtab.cpp
 }
 
 build() {
