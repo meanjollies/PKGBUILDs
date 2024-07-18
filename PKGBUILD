@@ -6,20 +6,20 @@
 # Contributor: archtux <antonio.arias99999@gmail.com>
 
 pkgname=ncdc
-pkgver=1.24
-pkgrel=2
+pkgver=1.24.1
+pkgrel=1
 pkgdesc='A lightweight direct connect client with a friendly ncurses interface'
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://dev.yorhel.nl/${pkgname}"
 license=('MIT')
 depends=('gnutls' 'sqlite' 'glib2' 'libmaxminddb')
 source=("${url%/${pkgname}}/download/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('233510d5355fc72fdad3578ebc8ab35d1da95b21d2774990f3a1356b7112da1e')
+sha256sums=('2a8ab9ad7d43f018fc73ba8babd689dfa44aba8cec53b88e4770185cb97778f7')
 
 build() {
   cd "${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr --with-geoip CFLAGS=-Wno-incompatible-pointer-types
+  ./configure --prefix=/usr --with-geoip
   make
 }
 
