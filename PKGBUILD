@@ -9,7 +9,7 @@ url="https://github.com/clangen/${pkgname%-bin}"
 license=('BSD-3-Clause')
 provides=('musikcube')
 conflicts=('musikcube')
-depends=('pulseaudio' 'libpulse' 'libev' 'alsa-lib')
+depends=('pulse-native-provider' 'libpulse' 'libev' 'alsa-lib')
 source=("${pkgname}-${pkgver}.tar.bz2::${url}/releases/download/${pkgver}/${pkgname%-bin}_${pkgver}_linux_x86_64.tar.bz2"
         "LICENSE.txt")
 sha256sums=('e29f0463e36f238a2d12167ca427234fc42f64754ea81bd56196689ea06731f5'
