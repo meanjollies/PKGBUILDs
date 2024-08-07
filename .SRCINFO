@@ -23,7 +23,7 @@ pkgbase = oci-cli
 	depends = python-retrying
 	depends = python-wcwidth
 	depends = python-yaml
-	optdepends = python-cx_oracle: Used by the database service
+	optdepends = python-cx-oracle: Used by the database service
 	source = oci-cli-3.45.1.tar.gz::https://github.com/oracle/oci-cli/archive/v3.45.1.tar.gz
 	sha256sums = e1697c76cc673fc26b3730eb57bd6b6f97240a7b09d98fdff6c87a4dab9c9781
 

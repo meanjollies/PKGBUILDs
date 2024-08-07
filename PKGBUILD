@@ -9,7 +9,7 @@ url="https://github.com/oracle/${pkgname}"
 license=('Apache-2.0 OR UPL-1.0')
 depends=('python' 'python-oci' 'python-arrow' 'python-certifi' 'python-click' 'python-dateutil' 'python-cryptography' 'python-pyopenssl' 'python-jmespath' 'python-terminaltables' 'python-idna' 'python-prompt_toolkit' 'python-pytz' 'python-six' 'python-retrying' 'python-wcwidth' 'python-yaml')
 makedepends=('python-setuptools')
-optdepends=('python-cx_oracle: Used by the database service')
+optdepends=('python-cx-oracle: Used by the database service')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
 sha256sums=('e1697c76cc673fc26b3730eb57bd6b6f97240a7b09d98fdff6c87a4dab9c9781')
 
