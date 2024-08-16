@@ -2,7 +2,7 @@
 
 _pkgname=mini
 pkgname=cpp-${_pkgname}
-pkgver=0.9.15
+pkgver=0.9.16
 pkgrel=1
 pkgdesc="Tiny, header only C++ library for manipulating INI files."
 arch=('any')
@@ -10,7 +10,7 @@ license=('MIT')
 conflicts=('mini-git')
 url="https://github.com/metayeti/mINI"
 source=("${_pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
-sha256sums=('241e105ab074827ab8b40582aa7b04c6191f84b244603969965c0874ad4f942c')
+sha256sums=('ce20e12b1e3bcd79d6eaa47bf8d4bb319e843dfa3585e069e73d581bdf0a81ec')
 
 package() {
   cd "mINI-${pkgver}"
