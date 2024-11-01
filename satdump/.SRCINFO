@@ -1,6 +1,6 @@
 pkgbase = satdump
 	pkgdesc = A generic satellite processing software
-	pkgver = 1.2.0
+	pkgver = 1.2.1
 	pkgrel = 1
 	url = https://github.com/altillimity/SatDump
 	arch = x86_64
@@ -23,7 +23,7 @@ pkgbase = satdump
 	depends = zstd
 	optdepends = limesuite
 	optdepends = bladerf
-	source = satdump-1.2.0.tar.gz::https://github.com/altillimity/SatDump/archive/1.2.0.tar.gz
-	sha256sums = 099d51864a0a3e374b0d12a9ad13d8ac263b9ab0cb88d4e5b08c2b72b9afb20e
+	source = satdump-1.2.1.tar.gz::https://github.com/altillimity/SatDump/archive/1.2.1.tar.gz
+	sha256sums = 1cf6fb3cde9a057cc95894ae02b28758793221e63fa0d12d0fda986b61ac3415
 
 pkgname = satdump
