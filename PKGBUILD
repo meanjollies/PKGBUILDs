@@ -27,7 +27,7 @@ prepare() {
 build() {
   cd "${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr
+  ./configure --prefix=/usr --without-cocoa
   make
 }
 
