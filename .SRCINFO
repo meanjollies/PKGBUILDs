@@ -20,6 +20,7 @@ pkgbase = satdump
 	depends = ocl-icd
 	depends = portaudio
 	depends = rtl-sdr
+	depends = zenity
 	depends = zstd
 	optdepends = limesuite
 	optdepends = bladerf
