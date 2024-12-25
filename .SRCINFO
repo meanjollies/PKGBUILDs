@@ -1,14 +1,14 @@
 pkgbase = libck
 	pkgdesc = A concurrency primitives, safe memory reclamation mechanisms C library
-	pkgver = 0.7.1
-	pkgrel = 2
+	pkgver = 0.7.2
+	pkgrel = 1
 	url = http://concurrencykit.org
 	arch = x86_64
 	license = BSD
 	license = Apache
 	license = Custom
 	depends = glibc
-	source = libck-0.7.1.tar.gz::https://github.com/concurrencykit/ck/archive/0.7.1.tar.gz
-	sha256sums = 97d2a21d5326ef79b4668be2e6eda6284ee77a64c0981b35fd9695c736c3d4ac
+	source = libck-0.7.2.tar.gz::https://github.com/concurrencykit/ck/archive/0.7.2.tar.gz
+	sha256sums = 568ebe0bc1988a23843fce6426602e555b7840bf6714edcdf0ed530214977f1b
 
 pkgname = libck
