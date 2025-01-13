@@ -1,6 +1,6 @@
 pkgbase = xfe
 	pkgdesc = X File Explorer (Xfe) is an MS-Explorer like file manager for X
-	pkgver = 1.46.2
+	pkgver = 2.0
 	pkgrel = 1
 	url = http://roland65.free.fr/xfe
 	arch = x86_64
@@ -11,7 +11,7 @@ pkgbase = xfe
 	depends = freetype2
 	depends = xcb-util
 	depends = libxft
-	source = https://downloads.sourceforge.net/sourceforge/xfe/xfe-1.46.2.tar.xz
-	sha256sums = ea134d75ae0128263d134dae158267b7427248da7f8acd59aa31653b041c456b
+	source = https://downloads.sourceforge.net/sourceforge/xfe/xfe-2.0.tar.xz
+	sha256sums = a06a8166304bfd4735f992590959d4c7016f5804feda6406660ca04d9bb29848
 
 pkgname = xfe
