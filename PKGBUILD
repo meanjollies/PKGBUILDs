@@ -22,6 +22,7 @@ prepare() {
   cd "${pkgname}-${pkgver}"
 
   gendesk --pkgname "${pkgname}" --pkgdesc "${pkgdesc}" --exec "/usr/bin/${pkgname}" -n
+  sed -i '34i #include <ctype.h>' src/sdl2/common.c
 }
 
 build() {
