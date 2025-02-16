@@ -4,7 +4,7 @@
 # Contributor: Boris Timofeev <mashin87@gmail.com>
 
 pkgname=xroar
-pkgver=1.8.1
+pkgver=1.8.2
 pkgrel=1
 pkgdesc='A Dragon and Tandy CoCo emulator'
 arch=('x86_64')
@@ -15,14 +15,13 @@ makedepends=('gendesk')
 install=${pkgname}.install
 source=("${url}/dl/${pkgname}-${pkgver}.tar.gz"
         "${pkgname}.png")
-sha256sums=('ae3f3a320cba097598e1ded1cc5abbafab022ec4d59ddb4a7376f557d92b49b9'
+sha256sums=('34431cc352bad47f70570243644a96bce54e877a6f7e348208fcae259835ae31'
             '0c6e5def77c6ca809cd69ae518512a89bff335147b44eb9ffc898d7302a17a59')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
 
   gendesk --pkgname "${pkgname}" --pkgdesc "${pkgdesc}" --exec "/usr/bin/${pkgname}" -n
-  sed -i '34i #include <ctype.h>' src/sdl2/common.c
 }
 
 build() {
