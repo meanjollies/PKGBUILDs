@@ -5,12 +5,12 @@ _pyname=ipaddress
 pkgver=1.0.23
 pkgrel=1
 pkgdesc='IPv4/IPv6 manipulation library'
-arch=('x86_64')
+arch=('any')
 url='https://github.com/phihag/ipaddress'
 license=('PSF-2.0')
 makedepends=('python-setuptools')
 depends=('python')
-source=("${url}/archive/v${pkgver}.tar.gz")
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
 sha256sums=('8cc01a7523042c3b1a01446f0318e8bbe0fc0d520ca651c986377e402a2e9b47')
 
 build() {
