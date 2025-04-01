@@ -2,7 +2,7 @@
 
 pkgname=actiona
 pkgver=3.10.2
-pkgrel=1
+pkgrel=2
 pkgdesc='A task automation tool that allows you to create and execute action lists'
 arch=('x86_64')
 url='https://wiki.actiona.tools'
@@ -16,6 +16,7 @@ sha256sums=('f24196960302dd961ee7d97264669fc569812ecfceda5f80ddf22235d1dd486e')
 build() {
   cd "${pkgname}-${pkgver}"
 
+  sed -i 's/CMAKE_CXX_STANDARD 14/CMAKE_CXX_STANDARD 17/' CMakeLists.txt
   sed -i '28 i set(CMAKE_INSTALL_RPATH "/usr/lib/actiona")' CMakeLists.txt
   sed -i '28 i set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)' CMakeLists.txt
   sed -i 's/loadActionPacks(QApplication::applicationDirPath() + QStringLiteral("\/actions")/loadActionPacks(QStringLiteral("\/usr\/lib\/actiona\/actions")/' gui/src/mainwindow.cpp
