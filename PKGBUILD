@@ -1,24 +1,31 @@
-# Maintainer: Andrew Sun <adsun701 at gmail dot com>
+# Maintainer:  Andrew O'Neill <andrew at haunted dot sh>
+# Contributor: Andrew Sun <adsun701 at gmail dot com>
 # Contributor: Xavier Devlamynck <magicrhesus at ouranos dot be>
 
 pkgname=sipgrep
-pkgver=2.1.0
+pkgver=2.2.0
 pkgrel=1
-pkgdesc="Display and Troubleshoot SIP signaling over IP networks in console"
-arch=('i686' 'x86_64')
-url="https://www.sipcapture.org/"
-license=('GPL3')
+pkgdesc='A powerful pcap-aware tool command line tool to sniff, capture, display and troubleshoot SIP signaling over IP networks'
+arch=('x86_64')
+url="https://github.com/sipcapture/${pkgname}"
+license=('GPL-3.0-only')
 depends=('pcre' 'libpcap')
-source=("${pkgname}-${pkgver}.tar.gz"::"https://github.com/sipcapture/sipgrep/archive/${pkgver}.tar.gz")
-sha256sums=('72ac17c734c404125ee20d552edf64f7a02bfa5d39fc70f2fd8fe944fdf1e632')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
+sha256sums=('ee16c1efde73c8faa591f8d84b697b629fabf43806fb292893a3ba3f8cc9a290')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}"
+
+  sed -i '22i #include <arpa/inet.h>' src/transport_hep.c
+  sed -i 's/AC_INIT(sipgrep,2.2.1/AC_INIT(sipgrep,2.2.0/' configure.ac
+  ./build.sh
   ./configure --prefix=/usr --enable-ipv6
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}"
+
   make DESTDIR="${pkgdir}" install
+  install -Dm644 sipgrep.8 "${pkgdir}/usr/share/man/man8/sipgrep.8"
 }

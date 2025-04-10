@@ -1,15 +1,13 @@
 pkgbase = sipgrep
-	pkgdesc = Display and Troubleshoot SIP signaling over IP networks in console
-	pkgver = 2.1.0
+	pkgdesc = A powerful pcap-aware tool command line tool to sniff, capture, display and troubleshoot SIP signaling over IP networks
+	pkgver = 2.2.0
 	pkgrel = 1
-	url = https://www.sipcapture.org/
-	arch = i686
+	url = https://github.com/sipcapture/sipgrep
 	arch = x86_64
-	license = GPL3
+	license = GPL-3.0-only
 	depends = pcre
 	depends = libpcap
-	source = sipgrep-2.1.0.tar.gz::https://github.com/sipcapture/sipgrep/archive/2.1.0.tar.gz
-	sha256sums = 72ac17c734c404125ee20d552edf64f7a02bfa5d39fc70f2fd8fe944fdf1e632
+	source = sipgrep-2.2.0.tar.gz::https://github.com/sipcapture/sipgrep/archive/2.2.0.tar.gz
+	sha256sums = ee16c1efde73c8faa591f8d84b697b629fabf43806fb292893a3ba3f8cc9a290
 
 pkgname = sipgrep
-
