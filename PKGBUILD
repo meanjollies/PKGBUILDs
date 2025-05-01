@@ -4,7 +4,7 @@
 
 pkgname=sipgrep
 pkgver=2.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A powerful pcap-aware tool command line tool to sniff, capture, display and troubleshoot SIP signaling over IP networks'
 arch=('x86_64')
 url="https://github.com/sipcapture/${pkgname}"
@@ -18,6 +18,7 @@ build() {
 
   sed -i '22i #include <arpa/inet.h>' src/transport_hep.c
   sed -i 's/AC_INIT(sipgrep,2.2.1/AC_INIT(sipgrep,2.2.0/' configure.ac
+  export CFLAGS="-std=gnu17" 
   ./build.sh
   ./configure --prefix=/usr --enable-ipv6
   make
