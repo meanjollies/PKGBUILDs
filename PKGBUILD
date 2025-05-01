@@ -5,7 +5,7 @@
 
 pkgname=julius-speech
 pkgver=4.6
-pkgrel=1
+pkgrel=2
 pkgdesc='A high-performance, two-pass large vocabulary continuous speech recognition decoder software'
 arch=('x86_64')
 url='https://github.com/julius-speech/julius'
@@ -18,6 +18,7 @@ sha256sums=('74447d7adb3bd119adae7915ba9422b7da553556f979ac4ee53a262d94d47b47')
 build() {
   cd "${srcdir}/julius-${pkgver}"
 
+  export CFLAGS="-std=gnu17"
   ./configure \
     --prefix=/usr \
     --enable-words-int \
