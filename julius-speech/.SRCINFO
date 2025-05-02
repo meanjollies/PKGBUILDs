@@ -1,7 +1,7 @@
 pkgbase = julius-speech
 	pkgdesc = A high-performance, two-pass large vocabulary continuous speech recognition decoder software
 	pkgver = 4.6
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/julius-speech/julius
 	arch = x86_64
 	license = BSD-3-Clause
