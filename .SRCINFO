@@ -1,7 +1,7 @@
 pkgbase = regina-normal
 	pkgdesc = Software for low-dimensional topology
 	pkgver = 7.3
-	pkgrel = 2
+	pkgrel = 3
 	url = https://regina-normal.github.io
 	arch = x86_64
 	license = GPL-2.0-or-later
