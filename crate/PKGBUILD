@@ -1,26 +1,39 @@
-# Maintainer:  Andrew O'Neill <andrew at haunted dot sh>
+# Maintainer: Andrew O'Neill <andrew at haunted dot sh>
 
 pkgname=crate
-pkgver=5.10.6
+pkgver=5.10.7
 pkgrel=1
 pkgdesc='Shared nothing, fully searchable, document oriented cluster datastore'
 arch=('x86_64')
 url='https://crate.io'
 license=('Apache-2.0')
 depends=('python')
+makedepends=('maven' 'java-environment-openjdk>=11')
 install='crate.install'
-source=("https://cdn.crate.io/downloads/releases/${pkgname}-${pkgver}.tar.gz"
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
         "${pkgname}.service"
         "${pkgname}.env")
-sha256sums=('f51eea9202832729f807ab73068c1fd6a895530a66704220ed000c1023935294'
+backup=('etc/crate/crate.yml'
+        'etc/crate/logging.yml')
+sha256sums=('7611694d00132c6006cd72dbd66b5ac71efbbb364137decc28c524b57a3df261'
             '04b36b561498332b1b569e49b42d0bedf04141de07b7b16ff1b06072673cfd21'
             '6182b8d527d52de4fc80023827518b2e8d873afdda873ef6bd2ed92b91982f75')
 
-backup=('etc/crate/crate.yml'
-        'etc/crate/logging.yml')
+build() {
+  cd "${pkgname}-${pkgver}"
+
+  ./mvnw package -DskipTests=true -Dmaven.gitcommitid.skip=true
+}
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${pkgname}-${pkgver}/app/target"
+
+  mkdir "${pkgname}-${pkgver}"
+  tar xf ${pkgname}-${pkgver}-*.tar.gz -C ${pkgname}-${pkgver} --strip-components=1
+  cd "${pkgname}-${pkgver}"
+
+  # Remove duplicate jar to prevent jar hell
+  rm lib/${pkgname}-${pkgver}-*-null.jar
 
   # Create dirs
   install -dm755 "${pkgdir}/etc/${pkgname}/"
