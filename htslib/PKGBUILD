@@ -2,24 +2,24 @@
 # Contributor: Christopher Vittal ("viralstitch") <chris@vittal.dev>
 
 pkgname=htslib
-pkgver=1.21
+pkgver=1.22
 pkgrel=1
 pkgdesc='A C library for high-throughput sequencing data formats'
 arch=('x86_64')
 url="https://github.com/samtools/${pkgname}"
 license=('MIT')
-depends=('bzip2' 'curl' 'xz' 'zlib' 'openssl' 'glibc')
+depends=('curl' 'zlib' 'openssl')
 provides=('tabix')
 replaces=('tabix')
 conflicts=('tabix')
 options=('staticlibs')
 source=("${pkgname}-${pkgver}.tar.bz2::${url}/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-sha256sums=('84b510e735f4963641f26fd88c8abdee81ff4cb62168310ae716636aac0f1823')
+sha256sums=('6250c1df297db477516e60ac8df45ed75a652d1f25b0f37f12f5b17269eafde9')
 
 build() {
   cd "${pkgname}-${pkgver}"
 
-  ./configure \
+  CFLAGS+=" -ffat-lto-objects" ./configure \
     --prefix=/usr \
     --enable-libcurl \
     --enable-plugins \
