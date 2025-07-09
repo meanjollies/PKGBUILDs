@@ -1,7 +1,7 @@
 # Maintainer: Andrew O'Neill <andrew at haunted dot sh>
 
 pkgname=oci-cli
-pkgver=3.62.0
+pkgver=3.62.1
 pkgrel=1
 pkgdesc='Command line interface for Oracle Cloud Infrastructure'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('python' 'python-oci' 'python-arrow' 'python-certifi' 'python-click' 'p
 makedepends=('python-setuptools')
 optdepends=('python-cx-oracle: Used by the database service')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
-sha256sums=('914586327825639859682a2b75ca2bd27f73c2fa0bb7db711232267308feac4f')
+sha256sums=('5b5a26edfd692b8e7d23b36a65f6d10417bad4ebbfabdd50e2502e9ffaa79113')
 
 prepare() {
   cd "${pkgname}-${pkgver}"
