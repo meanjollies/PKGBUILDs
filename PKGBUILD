@@ -2,8 +2,8 @@
 # Contributor: Kevin Slagle <kjslag at gmail dot com>
 
 pkgname=regina-normal
-pkgver=7.3
-pkgrel=3
+pkgver=7.3.1
+pkgrel=1
 pkgdesc='Software for low-dimensional topology'
 arch=('x86_64')
 url='https://regina-normal.github.io'
@@ -11,29 +11,30 @@ license=('GPL-2.0-or-later')
 depends=('gmp' 'graphviz' 'jansson' 'libxml2' 'popt' 'python3' 'qt6-base' 'qt6-svg' 'tokyocabinet' 'zlib')
 makedepends=('cmake')
 optdepends=('doxygen: Generate C++/Python API docs'
-	          'cppunit: Build full test suite'
+	    'cppunit: Build full test suite'
             'libxslt: Generate the user handbook')
 source=("https://github.com/${pkgname}/regina/archive/regina-${pkgver}.tar.gz")
-sha256sums=('aaa2e2f1b6b5c3a8dc9417ff3ad515efb104863c680ca2337029a81f72d2bfd0')
+sha256sums=('367f6307054ba1cd612abf23955a07d02bc081865145476d3ad2d2e36d633880')
 
 prepare() {
   cd "regina-regina-${pkgver}"
 
-  sed -i '45 i #include <stdint.h>' engine/utilities/stringutils.h
-  sed -i '44 i #include <stdint.h>' engine/triangulation/facepair.h
-  sed -i '43 i #include <cstdint>' engine/regina-core.h
-  sed -i 's/"gvc.h"/"graphviz\/gvc.h"/' qtui/src/packets/linkgraph.cpp qtui/src/packets/facetgraphtab.cpp
+  sed -i 's/unsigned svgLen/size_t svgLen/' qtui/src/packets/linkgraph.cpp qtui/src/packets/facetgraphtab.cpp
 }
 
 build() {
-  cd "regina-regina-${pkgver}"
+  local cmake_options=(
+    -B build
+    -S "regina-regina-${pkgver}"
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+  )
 
-  cmake -DCMAKE_INSTALL_PREFIX=/usr .
-  make
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-  cd "regina-regina-${pkgver}"
-
-  make DESTDIR="${pkgdir}" install
+  DESTDIR="${pkgdir}" cmake --install build
 }
