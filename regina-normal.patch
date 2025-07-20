@@ -1,0 +1,448 @@
+diff -rupN regina-regina-7.3.1/engine/utilities/typeutils.h regina-regina-7.3.1b/engine/utilities/typeutils.h
+--- regina-regina-7.3.1/engine/utilities/typeutils.h	2025-07-10 12:11:04.000000000 -0400
++++ regina-regina-7.3.1b/engine/utilities/typeutils.h	2025-07-20 15:51:38.620159982 -0400
+@@ -45,6 +45,7 @@
+ #include <typeinfo>
+ #include <variant>
+ #include "regina-core.h"
++#include <stdexcept>
+ 
+ namespace regina {
+ 
+diff -rupN regina-regina-7.3.1/qtui/src/CMakeLists.txt regina-regina-7.3.1b/qtui/src/CMakeLists.txt
+--- regina-regina-7.3.1/qtui/src/CMakeLists.txt	2025-07-10 12:11:04.000000000 -0400
++++ regina-regina-7.3.1b/qtui/src/CMakeLists.txt	2025-07-20 15:50:38.701538892 -0400
+@@ -64,6 +64,7 @@ SET(SOURCES ${SOURCES}
+   columnlayout.cpp
+   elidedlabel.cpp
+   examplesaction.cpp
++  graphviz.cpp
+   iconcache.cpp
+   introdialog.cpp
+   main.cpp
+diff -rupN regina-regina-7.3.1/qtui/src/graphviz.cpp regina-regina-7.3.1b/qtui/src/graphviz.cpp
+--- regina-regina-7.3.1/qtui/src/graphviz.cpp	1969-12-31 19:00:00.000000000 -0500
++++ regina-regina-7.3.1b/qtui/src/graphviz.cpp	2025-07-20 15:50:38.701842688 -0400
+@@ -0,0 +1,120 @@
++
++/**************************************************************************
++ *                                                                        *
++ *  Regina - A Normal Surface Theory Calculator                           *
++ *  Qt User Interface                                                     *
++ *                                                                        *
++ *  Copyright (c) 1999-2025, Ben Burton                                   *
++ *  For further details contact Ben Burton (bab@debian.org).              *
++ *                                                                        *
++ *  This program is free software; you can redistribute it and/or         *
++ *  modify it under the terms of the GNU General Public License as        *
++ *  published by the Free Software Foundation; either version 2 of the    *
++ *  License, or (at your option) any later version.                       *
++ *                                                                        *
++ *  As an exception, when this program is distributed through (i) the     *
++ *  App Store by Apple Inc.; (ii) the Mac App Store by Apple Inc.; or     *
++ *  (iii) Google Play by Google Inc., then that store may impose any      *
++ *  digital rights management, device limits and/or redistribution        *
++ *  restrictions that are required by its terms of service.               *
++ *                                                                        *
++ *  This program is distributed in the hope that it will be useful, but   *
++ *  WITHOUT ANY WARRANTY; without even the implied warranty of            *
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
++ *  General Public License for more details.                              *
++ *                                                                        *
++ *  You should have received a copy of the GNU General Public             *
++ *  License along with this program; if not, write to the Free            *
++ *  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,       *
++ *  MA 02110-1301, USA.                                                   *
++ *                                                                        *
++ **************************************************************************/
++
++#include "graphviz.h"
++
++#ifdef LIBGVC_FOUND
++#include "gvc.h"
++#include "utilities/typeutils.h"
++#include <QSvgWidget>
++#endif
++
++#ifdef LIBGVC_FOUND
++// Define LIBGVC_DYNAMIC_PLUGINS if you wish to load plugins dynamically.
++// This requires (amongst other things) the presence of the file config6,
++// which lists all available plugins.
++// #define LIBGVC_DYNAMIC_PLUGINS 1
++
++#ifndef LIBGVC_DYNAMIC_PLUGINS
++#if defined(_WIN32)
++__declspec(dllimport) gvplugin_library_t gvplugin_neato_layout_LTX_library;
++__declspec(dllimport) gvplugin_library_t gvplugin_dot_layout_LTX_library;
++__declspec(dllimport) gvplugin_library_t gvplugin_core_LTX_library;
++#else
++extern gvplugin_library_t gvplugin_neato_layout_LTX_library;
++extern gvplugin_library_t gvplugin_dot_layout_LTX_library;
++extern gvplugin_library_t gvplugin_core_LTX_library;
++#endif
++
++lt_symlist_t link_lt_preloaded_symbols[] = {
++    { "gvplugin_neato_layout_LTX_library", &gvplugin_neato_layout_LTX_library },
++    { "gvplugin_dot_layout_LTX_library", &gvplugin_dot_layout_LTX_library },
++    { "gvplugin_core_LTX_library", &gvplugin_core_LTX_library },
++    { nullptr, nullptr }
++};
++#endif
++
++void Graphviz::render(QSvgWidget* widget, const std::string& dot,
++        Renderer renderer) {
++    // At some point (Graphviz 13), Graphviz changed the type of the svgLen
++    // argument to gvRenderData() from unsigned* to size_t*.  Instead of
++    // trying to fix this via conditional compilation, we ask the compiler
++    // to deduce the type automatically.
++    using SVGLen = std::remove_pointer_t<
++        regina::CallableArg<decltype(&gvRenderData), 4>::type>;
++    static_assert(std::is_integral_v<SVGLen>);
++
++    char* svg;
++    SVGLen svgLen;
++
++#ifdef LIBGVC_DYNAMIC_PLUGINS
++    GVC_t* gvc = gvContext();
++#else
++    // Manually specify our plugins to avoid on-demand loading.
++    GVC_t* gvc = gvContextPlugins(link_lt_preloaded_symbols, 0);
++
++    gvAddLibrary(gvc, &gvplugin_core_LTX_library);
++    switch (renderer) {
++        case Graphviz::Renderer::Neato:
++            gvAddLibrary(gvc, &gvplugin_neato_layout_LTX_library); break;
++        case Graphviz::Renderer::Dot:
++            gvAddLibrary(gvc, &gvplugin_dot_layout_LTX_library); break;
++    }
++#endif
++
++    Agraph_t* g = agmemread(dot.c_str());
++    switch (renderer) {
++        case Graphviz::Renderer::Neato:
++            gvLayout(gvc, g, "neato"); break;
++        case Graphviz::Renderer::Dot:
++            gvLayout(gvc, g, "dot"); break;
++    }
++    gvRenderData(gvc, g, "svg", &svg, &svgLen);
++    gvFreeLayout(gvc, g);
++    agclose(g);
++    gvFreeContext(gvc);
++
++    widget->load(QByteArray(svg, svgLen));
++    gvFreeRenderData(svg);
++    widget->resize(widget->sizeHint());
++}
++#else
++const char* Graphviz::notSupported =
++    "<qt>This copy of <i>Regina</i> was built without "
++    "<i>Graphviz</i> support.  Therefore I cannot draw graphs.<p>"
++    "If you downloaded <i>Regina</i> as a ready-made package, please "
++    "contact the package maintainer for a <i>Graphviz</i>-enabled build.<p>"
++    "If you compiled <i>Regina</i> yourself, try installing the "
++    "<i>Graphviz</i> libraries on your system and then compiling "
++    "<i>Regina</i> again.</qt>";
++#endif // LIBGVC_FOUND
++
+diff -rupN regina-regina-7.3.1/qtui/src/graphviz.h regina-regina-7.3.1b/qtui/src/graphviz.h
+--- regina-regina-7.3.1/qtui/src/graphviz.h	1969-12-31 19:00:00.000000000 -0500
++++ regina-regina-7.3.1b/qtui/src/graphviz.h	2025-07-20 15:50:38.702049585 -0400
+@@ -0,0 +1,58 @@
++
++/**************************************************************************
++ *                                                                        *
++ *  Regina - A Normal Surface Theory Calculator                           *
++ *  Qt User Interface                                                     *
++ *                                                                        *
++ *  Copyright (c) 1999-2025, Ben Burton                                   *
++ *  For further details contact Ben Burton (bab@debian.org).              *
++ *                                                                        *
++ *  This program is free software; you can redistribute it and/or         *
++ *  modify it under the terms of the GNU General Public License as        *
++ *  published by the Free Software Foundation; either version 2 of the    *
++ *  License, or (at your option) any later version.                       *
++ *                                                                        *
++ *  As an exception, when this program is distributed through (i) the     *
++ *  App Store by Apple Inc.; (ii) the Mac App Store by Apple Inc.; or     *
++ *  (iii) Google Play by Google Inc., then that store may impose any      *
++ *  digital rights management, device limits and/or redistribution        *
++ *  restrictions that are required by its terms of service.               *
++ *                                                                        *
++ *  This program is distributed in the hope that it will be useful, but   *
++ *  WITHOUT ANY WARRANTY; without even the implied warranty of            *
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
++ *  General Public License for more details.                              *
++ *                                                                        *
++ *  You should have received a copy of the GNU General Public             *
++ *  License along with this program; if not, write to the Free            *
++ *  Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,       *
++ *  MA 02110-1301, USA.                                                   *
++ *                                                                        *
++ **************************************************************************/
++
++/*! \file graphviz.h
++ *  \brief Provides the glue between Regina and Graphviz.
++ */
++
++#ifndef __GRAPHVIZ_H
++#define __GRAPHVIZ_H
++
++#include "regina-config.h" // for LIBGVC_FOUND
++#include <string>
++
++class QSvgWidget;
++
++class Graphviz {
++    public:
++#ifdef LIBGVC_FOUND
++        enum class Renderer { Neato, Dot };
++
++        static void render(QSvgWidget* widget, const std::string& dot,
++            Renderer renderer);
++#else
++        static const char* notSupported;
++#endif
++};
++
++#endif
++
+diff -rupN regina-regina-7.3.1/qtui/src/packets/facetgraphtab.cpp regina-regina-7.3.1b/qtui/src/packets/facetgraphtab.cpp
+--- regina-regina-7.3.1/qtui/src/packets/facetgraphtab.cpp	2025-07-10 12:11:04.000000000 -0400
++++ regina-regina-7.3.1b/qtui/src/packets/facetgraphtab.cpp	2025-07-20 15:50:38.702486885 -0400
+@@ -31,7 +31,6 @@
+  **************************************************************************/
+ 
+ // Regina core includes:
+-#include "regina-config.h" // for LIBGVC_FOUND
+ #include "treewidth/treedecomposition.h"
+ #include "triangulation/facetpairing.h"
+ #include "triangulation/facetpairing3.h"
+@@ -43,6 +42,7 @@
+ #include "facetgraphtab.h"
+ #include "reginaprefset.h"
+ #include "reginasupport.h"
++#include "../graphviz.h"
+ #include "../messagelayer.h"
+ 
+ #include <fstream>
+@@ -59,34 +59,6 @@
+ #include <QStackedWidget>
+ #include <QTemporaryFile>
+ 
+-#ifdef LIBGVC_FOUND
+-#include "gvc.h"
+-
+-// Define LIBGVC_DYNAMIC_PLUGINS if you wish to load plugins dynamically.
+-// This requires (amongst other things) the presence of the file config6,
+-// which list all available plugins.
+-// #define LIBGVC_DYNAMIC_PLUGINS 1
+-
+-#ifndef LIBGVC_DYNAMIC_PLUGINS
+-#if defined(_WIN32)
+-__declspec(dllimport) gvplugin_library_t gvplugin_neato_layout_LTX_library;
+-__declspec(dllimport) gvplugin_library_t gvplugin_dot_layout_LTX_library;
+-__declspec(dllimport) gvplugin_library_t gvplugin_core_LTX_library;
+-#else
+-extern gvplugin_library_t gvplugin_neato_layout_LTX_library;
+-extern gvplugin_library_t gvplugin_dot_layout_LTX_library;
+-extern gvplugin_library_t gvplugin_core_LTX_library;
+-#endif
+-
+-lt_symlist_t lt_preloaded_symbols[] = {
+-    { "gvplugin_neato_layout_LTX_library", &gvplugin_neato_layout_LTX_library },
+-    { "gvplugin_dot_layout_LTX_library", &gvplugin_dot_layout_LTX_library },
+-    { "gvplugin_core_LTX_library", &gvplugin_core_LTX_library },
+-    { nullptr, nullptr }
+-};
+-#endif
+-#endif
+-
+ FacetGraphTab::FacetGraphTab(FacetGraphData* useData,
+         PacketTabbedViewerTab* useParentUI) :
+         PacketViewerTab(useParentUI),
+@@ -222,13 +194,7 @@ void FacetGraphTab::refresh() {
+     chooseType->setEnabled(false);
+ 
+ #ifndef LIBGVC_FOUND
+-    showError(tr("<qt>This copy of <i>Regina</i> was built without "
+-        "<i>Graphviz</i> support.  Therefore I cannot draw graphs.<p>"
+-        "If you downloaded <i>Regina</i> as a ready-made package, please "
+-        "contact the package maintainer for a <i>Graphviz</i>-enabled build.<p>"
+-        "If you compiled <i>Regina</i> yourself, try installing the "
+-        "<i>Graphviz</i> libraries on your system and then compiling "
+-        "<i>Regina</i> again.</qt>"));
++    showError(tr(Graphviz::notSupported));
+     return;
+ #else
+     neverDrawn = false;
+@@ -293,34 +259,9 @@ void FacetGraphTab::refresh() {
+             break;
+     }
+ 
+-    char* svg;
+-    unsigned svgLen;
+-
+-#ifdef LIBGVC_DYNAMIC_PLUGINS
+-    GVC_t* gvc = gvContext();
+-#else
+-    // Manually specify our plugins to avoid on-demand loading.
+-    GVC_t* gvc = gvContextPlugins(lt_preloaded_symbols, 0);
+-
+-    gvAddLibrary(gvc, &gvplugin_core_LTX_library);
+-    if (chooseType->currentIndex() == 0)
+-        gvAddLibrary(gvc, &gvplugin_neato_layout_LTX_library);
+-    else
+-        gvAddLibrary(gvc, &gvplugin_dot_layout_LTX_library);
+-#endif
+-
+-    Agraph_t* g = agmemread(dot.c_str());
+-    if (chooseType->currentIndex() == 0)
+-        gvLayout(gvc, g, "neato");
+-    else
+-        gvLayout(gvc, g, "dot");
+-    gvRenderData(gvc, g, "svg", &svg, &svgLen);
+-    gvFreeLayout(gvc, g);
+-    agclose(g);
+-    gvFreeContext(gvc);
+-
+-    graph->load(QByteArray(svg, svgLen));
+-    graph->resize(graph->sizeHint());
++    Graphviz::render(graph, dot,
++        chooseType->currentIndex() == 0 ? Graphviz::Renderer::Neato :
++        Graphviz::Renderer::Dot);
+ 
+     stack->setCurrentWidget(layerGraph);
+     chooseType->setEnabled(true);
+diff -rupN regina-regina-7.3.1/qtui/src/packets/linkgraph.cpp regina-regina-7.3.1b/qtui/src/packets/linkgraph.cpp
+--- regina-regina-7.3.1/qtui/src/packets/linkgraph.cpp	2025-07-10 12:11:04.000000000 -0400
++++ regina-regina-7.3.1b/qtui/src/packets/linkgraph.cpp	2025-07-20 15:50:38.702847354 -0400
+@@ -31,7 +31,6 @@
+  **************************************************************************/
+ 
+ // Regina core includes:
+-#include "regina-config.h" // for LIBGVC_FOUND
+ #include "treewidth/treedecomposition.h"
+ #include "link/link.h"
+ 
+@@ -39,6 +38,7 @@
+ #include "linkgraph.h"
+ #include "reginaprefset.h"
+ #include "reginasupport.h"
++#include "../graphviz.h"
+ #include "../messagelayer.h"
+ 
+ #include <fstream>
+@@ -55,31 +55,6 @@
+ #include <QStackedWidget>
+ #include <QTemporaryFile>
+ 
+-#ifdef LIBGVC_FOUND
+-#include "gvc.h"
+-
+-// Define LIBGVC_DYNAMIC_PLUGINS if you wish to load plugins dynamically.
+-// This requires (amongst other things) the presence of the file config6,
+-// which list all available plugins.
+-// #define LIBGVC_DYNAMIC_PLUGINS 1
+-
+-#ifndef LIBGVC_DYNAMIC_PLUGINS
+-#if defined(_WIN32)
+-__declspec(dllimport) gvplugin_library_t gvplugin_dot_layout_LTX_library;
+-__declspec(dllimport) gvplugin_library_t gvplugin_core_LTX_library;
+-#else
+-extern gvplugin_library_t gvplugin_dot_layout_LTX_library;
+-extern gvplugin_library_t gvplugin_core_LTX_library;
+-#endif
+-
+-lt_symlist_t link_lt_preloaded_symbols[] = {
+-    { "gvplugin_dot_layout_LTX_library", &gvplugin_dot_layout_LTX_library },
+-    { "gvplugin_core_LTX_library", &gvplugin_core_LTX_library },
+-    { nullptr, nullptr }
+-};
+-#endif
+-#endif
+-
+ LinkGraphUI::LinkGraphUI(regina::PacketOf<regina::Link>* useLink,
+         PacketTabbedUI* useParentUI) :
+         PacketViewerTab(useParentUI),
+@@ -170,13 +145,7 @@ void LinkGraphUI::refresh() {
+     chooseType->setEnabled(false);
+ 
+ #ifndef LIBGVC_FOUND
+-    showError(tr("<qt>This copy of <i>Regina</i> was built without "
+-        "<i>Graphviz</i> support.  Therefore I cannot draw graphs.<p>"
+-        "If you downloaded <i>Regina</i> as a ready-made package, please "
+-        "contact the package maintainer for a <i>Graphviz</i>-enabled build.<p>"
+-        "If you compiled <i>Regina</i> yourself, try installing the "
+-        "<i>Graphviz</i> libraries on your system and then compiling "
+-        "<i>Regina</i> again.</qt>"));
++    showError(tr(Graphviz::notSupported));
+     return;
+ #else
+     size_t n = link->size();
+@@ -222,28 +191,7 @@ void LinkGraphUI::refresh() {
+             break;
+     }
+ 
+-    char* svg;
+-    unsigned svgLen;
+-
+-#ifdef LIBGVC_DYNAMIC_PLUGINS
+-    GVC_t* gvc = gvContext();
+-#else
+-    // Manually specify our plugins to avoid on-demand loading.
+-    GVC_t* gvc = gvContextPlugins(link_lt_preloaded_symbols, 0);
+-
+-    gvAddLibrary(gvc, &gvplugin_core_LTX_library);
+-    gvAddLibrary(gvc, &gvplugin_dot_layout_LTX_library);
+-#endif
+-
+-    Agraph_t* g = agmemread(dot.c_str());
+-    gvLayout(gvc, g, "dot");
+-    gvRenderData(gvc, g, "svg", &svg, &svgLen);
+-    gvFreeLayout(gvc, g);
+-    agclose(g);
+-    gvFreeContext(gvc);
+-
+-    graph->load(QByteArray(svg, svgLen));
+-    graph->resize(graph->sizeHint());
++    Graphviz::render(graph, dot, Graphviz::Renderer::Dot);
+ 
+     stack->setCurrentWidget(layerGraph);
+     chooseType->setEnabled(true);
+diff -rupN regina-regina-7.3.1/Regina.xcodeproj/project.pbxproj regina-regina-7.3.1b/Regina.xcodeproj/project.pbxproj
+--- regina-regina-7.3.1/Regina.xcodeproj/project.pbxproj	2025-07-10 12:11:04.000000000 -0400
++++ regina-regina-7.3.1b/Regina.xcodeproj/project.pbxproj	2025-07-20 15:50:38.699921450 -0400
+@@ -1280,6 +1280,7 @@
+ 		057EE4E21C600A3600C4D155 /* facetpairing7.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 057EE4651C600A1B00C4D155 /* facetpairing7.cpp */; };
+ 		057EE4E31C600A3600C4D155 /* facetpairing8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 057EE4661C600A1B00C4D155 /* facetpairing8.cpp */; };
+ 		057F317419B8935800D30520 /* Example.mm in Sources */ = {isa = PBXBuildFile; fileRef = 057F317319B8935800D30520 /* Example.mm */; };
++		0581D27C2E2D39500099E9E7 /* graphviz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0581D27B2E2D39500099E9E7 /* graphviz.cpp */; };
+ 		0582FDE62731FE0900203AE7 /* attachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0582FDE42731FE0800203AE7 /* attachment.cpp */; };
+ 		0582FDE72731FE0900203AE7 /* attachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0582FDE42731FE0800203AE7 /* attachment.cpp */; };
+ 		0582FDE82731FE0900203AE7 /* attachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 0582FDE52731FE0800203AE7 /* attachment.h */; };
+@@ -4066,6 +4067,8 @@
+ 		057EE4A61C600A3000C4D155 /* triangulation15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = triangulation15.cpp; sourceTree = "<group>"; };
+ 		057F317219B8935800D30520 /* Example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
+ 		057F317319B8935800D30520 /* Example.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Example.mm; sourceTree = "<group>"; };
++		0581D27A2E2D39500099E9E7 /* graphviz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphviz.h; sourceTree = "<group>"; };
++		0581D27B2E2D39500099E9E7 /* graphviz.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphviz.cpp; sourceTree = "<group>"; };
+ 		0582FDE42731FE0800203AE7 /* attachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attachment.cpp; sourceTree = "<group>"; };
+ 		0582FDE52731FE0800203AE7 /* attachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attachment.h; sourceTree = "<group>"; };
+ 		0582FDE92731FE3300203AE7 /* attachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attachment.cpp; sourceTree = "<group>"; };
+@@ -7554,6 +7557,8 @@
+ 				0564A4231811D91E002CC2AE /* examplesaction.h */,
+ 				0564A4241811D91E002CC2AE /* exports.cpp */,
+ 				0564A4251811D91E002CC2AE /* foreign */,
++				0581D27B2E2D39500099E9E7 /* graphviz.cpp */,
++				0581D27A2E2D39500099E9E7 /* graphviz.h */,
+ 				0564A4411811D91E002CC2AE /* iconcache.cpp */,
+ 				0564A4421811D91E002CC2AE /* iconcache.h */,
+ 				0564A56F1811D91F002CC2AE /* imports.cpp */,
+@@ -11042,6 +11047,7 @@
+ 				0564A80F1811D921002CC2AE /* pythonhandler.cpp in Sources */,
+ 				0564A9631811D921002CC2AE /* textui.cpp in Sources */,
+ 				0564A8051811D921002CC2AE /* examplesaction.cpp in Sources */,
++				0581D27C2E2D39500099E9E7 /* graphviz.cpp in Sources */,
+ 				0564A9471811D921002CC2AE /* packetcreator.cpp in Sources */,
+ 				0564A9411811D921002CC2AE /* main.cpp in Sources */,
+ 				0564A8031811D921002CC2AE /* coordinatechooser.cpp in Sources */,
