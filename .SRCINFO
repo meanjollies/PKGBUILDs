@@ -1,7 +1,7 @@
 pkgbase = regina-normal
 	pkgdesc = Software for low-dimensional topology
 	pkgver = 7.3.1
-	pkgrel = 1
+	pkgrel = 2
 	url = https://regina-normal.github.io
 	arch = x86_64
 	license = GPL-2.0-or-later
@@ -20,6 +20,8 @@ pkgbase = regina-normal
 	optdepends = cppunit: Build full test suite
 	optdepends = libxslt: Generate the user handbook
 	source = https://github.com/regina-normal/regina/archive/regina-7.3.1.tar.gz
+	source = regina-normal.patch
 	sha256sums = 367f6307054ba1cd612abf23955a07d02bc081865145476d3ad2d2e36d633880
+	sha256sums = 7bfec94f3ed1dd28c618a5eb382f167566bec85ae325404706977c751e432b12
 
 pkgname = regina-normal
