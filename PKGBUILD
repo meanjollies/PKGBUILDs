@@ -1,43 +1,33 @@
-# Maintainer: EndlessEden <eden [at] rose.place>
-# Maintainer: Juri Grabowski <arch-dablin-maint@jugra.de>
-_pkgname=dablin
-pkgname=dablin
-pkgver=1.13.0.r364.c20b4c6
-pkgrel=1
-pkgdesc="plays a DAB/DAB+ audio service – either from a received live transmission or from ETI files."
-arch=('x86_64')
-url="https://github.com/Opendigitalradio/dablin"
-license=('GPL')
-depends=('sdl2' 'mpg123' 'gtkmm3' 'faad2' 'fdkaac' 'libfdk-aac')
-makedepends=('pkg-config' 'git' 'cmake')
-provides=("$_pkgname" "$pkgname")
-conflicts=("$_pkgname")
-source=($_pkgname::git+"$url.git")
-md5sums=('SKIP')
+# Maintainer:  Andrew O'Neill <andrew at haunted dot sh>
+# Contributor: EndlessEden <eden [at] rose.place>
+# Contributor: Juri Grabowski <arch-dablin-maint@jugra.de>
 
-pkgver() {
-    cd "$srcdir"/"$_pkgname"
-   
-    echo "$(git describe| sed 's,-,\n,g' | head -1 | sed 's,v,,g')"'.'$(printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)")
-}
+pkgname=dablin
+pkgver=1.16.0
+pkgrel=1
+pkgdesc='Plays a DAB/DAB+ audio service from a live transmission or from a stored ensemble recording'
+arch=('x86_64')
+url="https://github.com/Opendigitalradio/${pkgname}"
+license=('GPL-3.0-only')
+depends=('sdl2' 'mpg123' 'gtkmm3' 'faad2')
+makedepends=('cmake')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/${pkgver}.tar.gz")
+sha256sums=('3b008ed7a6f98802b7cfc7e753c4a6d68766a2d5a48b7ce68d3dce14ebf4cf03')
 
 build() {
-  cd "$srcdir"/"$_pkgname"
+  local cmake_options=(
+    -B build
+    -S "${pkgname}-${pkgver}"
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+    -D CMAKE_POLICY_VERSION_MINIMUM=3.5
+  )
 
-  if [ -d "$srcdir"/"$_pkgname"/build ]; then
-  rm -rf "$srcdir"/"$_pkgname"/build
-  fi
-
-  mkdir build
-  cd build
-  cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RELEASE
-  make
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-  cd "$srcdir"/"$_pkgname"/build
-
-  make DESTDIR="$pkgdir/" install
+  DESTDIR="${pkgdir}" cmake --install build
 }
-
-# vim:set ts=2 sw=2 et:
