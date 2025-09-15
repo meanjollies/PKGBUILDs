@@ -2,7 +2,7 @@
 # Contributor: Pablo Lezaeta <prflr88@gmail.com>
 
 pkgname=yash
-pkgver=2.59
+pkgver=2.60
 pkgrel=1
 pkgdesc='Yet Another SHell is a POSIX-compliant command line shell'
 arch=('i686' 'x86_64' 'armv7h' 'aarch64')
@@ -14,7 +14,7 @@ options=('lto')
 install="${pkgname}.install"
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/magicant/${pkgname}/archive/refs/tags/${pkgver}.tar.gz"
         "${pkgname}.install")
-sha256sums=('efe9d299a14d103d259b8a709fa2b664d8ff6ee498523f797f31f67db62e11af'
+sha256sums=('15574a494fde1f90d95c1c659bf834c2d91ea4948dcfd055cac89c70ec5568f5'
             'c66c7a4b9da4416082ea57bbec0ce0c2bbc13af340ceb1241b4a4897d8944531')
 
 build() {
