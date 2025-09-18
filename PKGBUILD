@@ -3,11 +3,11 @@
 
 pkgname=yash
 pkgver=2.60
-pkgrel=1
+pkgrel=2
 pkgdesc='Yet Another SHell is a POSIX-compliant command line shell'
 arch=('i686' 'x86_64' 'armv7h' 'aarch64')
 url='https://magicant.github.io/yash/'
-license=('GPL-2.0-only')
+license=('GPL-2.0-or-later')
 depends=('ncurses')
 makedepends=('asciidoc' 'ed')
 options=('lto')

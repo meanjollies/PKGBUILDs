@@ -1,14 +1,14 @@
 pkgbase = yash
 	pkgdesc = Yet Another SHell is a POSIX-compliant command line shell
 	pkgver = 2.60
-	pkgrel = 1
+	pkgrel = 2
 	url = https://magicant.github.io/yash/
 	install = yash.install
 	arch = i686
 	arch = x86_64
 	arch = armv7h
 	arch = aarch64
-	license = GPL-2.0-only
+	license = GPL-2.0-or-later
 	makedepends = asciidoc
 	makedepends = ed
 	depends = ncurses
