@@ -1,6 +1,6 @@
-diff -rupN execline-2.9.7.0/package/deps.mak execline-2.9.7.0b/package/deps.mak
---- execline-2.9.7.0/package/deps.mak	2025-04-27 06:36:52.000000000 -0400
-+++ execline-2.9.7.0b/package/deps.mak	2025-05-06 17:23:41.030774183 -0400
+diff -rupN execline-2.9.8.0/package/deps.mak execline-2.9.8.0b/package/deps.mak
+--- execline-2.9.8.0/package/deps.mak	2025-05-26 09:38:39.000000000 -0400
++++ execline-2.9.8.0b/package/deps.mak	2025-12-27 15:42:48.311292895 -0500
 @@ -82,108 +82,108 @@ src/libexecline/exlsn_importas.o src/lib
  src/libexecline/exlsn_main.o src/libexecline/exlsn_main.lo: src/libexecline/exlsn_main.c src/include/execline/execline.h src/include-local/exlsn.h
  src/libexecline/exlsn_multidefine.o src/libexecline/exlsn_multidefine.lo: src/libexecline/exlsn_multidefine.c src/include/execline/execline.h src/include-local/exlsn.h
@@ -212,10 +212,10 @@ diff -rupN execline-2.9.7.0/package/deps.mak execline-2.9.7.0b/package/deps.mak
  ifeq ($(strip $(STATIC_LIBS_ARE_PIC)),)
  libexecline.a.xyzzy: src/libexecline/el_execsequence.o src/libexecline/el_forx_pidinfo.o src/libexecline/el_getstrict.o src/libexecline/el_modif_and_exec.o src/libexecline/el_modif_and_spawn.o src/libexecline/el_modifs_and_exec.o src/libexecline/el_parse.o src/libexecline/el_parse_from_buffer.o src/libexecline/el_parse_from_string.o src/libexecline/el_popenv.o src/libexecline/el_pushenv.o src/libexecline/el_semicolon.o src/libexecline/el_spawn0.o src/libexecline/el_gspawn0.o src/libexecline/el_substandrun.o src/libexecline/el_substandrun_str.o src/libexecline/el_substitute.o src/libexecline/el_transform.o src/libexecline/el_trueargv.o src/libexecline/el_vardupl.o src/libexecline/exlsn_define.o src/libexecline/exlsn_elglob.o src/libexecline/exlsn_importas.o src/libexecline/exlsn_multidefine.o src/libexecline/exlsn_exlp.o src/libexecline/exlsn_main.o src/libexecline/exlsn_free.o src/libexecline/exlp.o
  else
-@@ -192,6 +192,6 @@ endif
- libexecline.pc: EXTRA_LIBS := -lskarnet ${SPAWN_LIB}
- libexecline.so.xyzzy: EXTRA_LIBS := -lskarnet ${SPAWN_LIB}
+@@ -194,6 +194,6 @@ libexecline.so.xyzzy: EXTRA_LIBS := -lsk
  libexecline.so.xyzzy:src/libexecline/el_execsequence.lo src/libexecline/el_forx_pidinfo.lo src/libexecline/el_getstrict.lo src/libexecline/el_modif_and_exec.lo src/libexecline/el_modif_and_spawn.lo src/libexecline/el_modifs_and_exec.lo src/libexecline/el_parse.lo src/libexecline/el_parse_from_buffer.lo src/libexecline/el_parse_from_string.lo src/libexecline/el_popenv.lo src/libexecline/el_pushenv.lo src/libexecline/el_semicolon.lo src/libexecline/el_spawn0.lo src/libexecline/el_gspawn0.lo src/libexecline/el_substandrun.lo src/libexecline/el_substandrun_str.lo src/libexecline/el_substitute.lo src/libexecline/el_transform.lo src/libexecline/el_trueargv.lo src/libexecline/el_vardupl.lo src/libexecline/exlsn_define.lo src/libexecline/exlsn_elglob.lo src/libexecline/exlsn_importas.lo src/libexecline/exlsn_multidefine.lo src/libexecline/exlsn_exlp.lo src/libexecline/exlsn_main.lo src/libexecline/exlsn_free.lo src/libexecline/exlp.lo
+ libexecline.dylib.xyzzy: EXTRA_LIBS := -lskarnet ${SPAWN_LIB}
+ libexecline.dylib.xyzzy:src/libexecline/el_execsequence.lo src/libexecline/el_forx_pidinfo.lo src/libexecline/el_getstrict.lo src/libexecline/el_modif_and_exec.lo src/libexecline/el_modif_and_spawn.lo src/libexecline/el_modifs_and_exec.lo src/libexecline/el_parse.lo src/libexecline/el_parse_from_buffer.lo src/libexecline/el_parse_from_string.lo src/libexecline/el_popenv.lo src/libexecline/el_pushenv.lo src/libexecline/el_semicolon.lo src/libexecline/el_spawn0.lo src/libexecline/el_gspawn0.lo src/libexecline/el_substandrun.lo src/libexecline/el_substandrun_str.lo src/libexecline/el_substitute.lo src/libexecline/el_transform.lo src/libexecline/el_trueargv.lo src/libexecline/el_vardupl.lo src/libexecline/exlsn_define.lo src/libexecline/exlsn_elglob.lo src/libexecline/exlsn_importas.lo src/libexecline/exlsn_multidefine.lo src/libexecline/exlsn_exlp.lo src/libexecline/exlsn_main.lo src/libexecline/exlsn_free.lo src/libexecline/exlp.lo
 -execline: EXTRA_LIBS := ${SPAWN_LIB} ${MAYBEPTHREAD_LIB}
 -execline: src/multicall/execline.o ${LIBEXECLINE} ${LIBNSSS} -lskarnet
 +execline: EXTRA_LIBS := -lskarnet ${SPAWN_LIB} ${MAYBEPTHREAD_LIB}
