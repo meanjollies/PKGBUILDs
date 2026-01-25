@@ -1,6 +1,6 @@
-diff -rupN execline-2.9.8.0/package/deps.mak execline-2.9.8.0b/package/deps.mak
---- execline-2.9.8.0/package/deps.mak	2025-05-26 09:38:39.000000000 -0400
-+++ execline-2.9.8.0b/package/deps.mak	2025-12-27 15:42:48.311292895 -0500
+diff -rupN execline-2.9.8.1/package/deps.mak execline-2.9.8.1b/package/deps.mak
+--- execline-2.9.8.1/package/deps.mak	2025-05-26 09:38:39.000000000 -0400
++++ execline-2.9.8.1b/package/deps.mak	2026-01-25 10:30:30.426560018 -0500
 @@ -82,108 +82,108 @@ src/libexecline/exlsn_importas.o src/lib
  src/libexecline/exlsn_main.o src/libexecline/exlsn_main.lo: src/libexecline/exlsn_main.c src/include/execline/execline.h src/include-local/exlsn.h
  src/libexecline/exlsn_multidefine.o src/libexecline/exlsn_multidefine.lo: src/libexecline/exlsn_multidefine.c src/include/execline/execline.h src/include-local/exlsn.h
