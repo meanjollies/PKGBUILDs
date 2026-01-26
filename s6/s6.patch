@@ -1,6 +1,6 @@
-diff -rupN s6-2.14.0.0/package/deps.mak s6-2.14.0.0b/package/deps.mak
---- s6-2.14.0.0/package/deps.mak	2025-11-04 16:44:09.000000000 -0500
-+++ s6-2.14.0.0b/package/deps.mak	2025-12-27 16:02:06.668436539 -0500
+diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
+--- s6-2.14.0.1/package/deps.mak	2025-11-04 16:44:09.000000000 -0500
++++ s6-2.14.0.1b/package/deps.mak	2026-01-25 10:44:20.243691059 -0500
 @@ -148,92 +148,92 @@ src/supervision/s6_svlisten_loop.o src/s
  src/supervision/s6_svlisten_signal_handler.o src/supervision/s6_svlisten_signal_handler.lo: src/supervision/s6_svlisten_signal_handler.c src/supervision/s6-svlisten.h
  src/usertree/s6-usertree-maker.o src/usertree/s6-usertree-maker.lo: src/usertree/s6-usertree-maker.c src/include/s6/auto.h src/include/s6/config.h
@@ -91,7 +91,7 @@ diff -rupN s6-2.14.0.0/package/deps.mak s6-2.14.0.0b/package/deps.mak
 -s6-instance-maker: src/instance/s6-instance-maker.o libs6auto.a.xyzzy -lskarnet
 -s6-instance-status: EXTRA_LIBS :=
 -s6-instance-status: src/instance/s6-instance-status.o -lskarnet
-+s6-alias: EXTRA_LIBS := -lskarnet 
++s6-alias: EXTRA_LIBS := -lskarnet
 +s6-alias: src/alias/s6-alias.o
 +s6-alias-chpst: EXTRA_LIBS := -lskarnet ${MAYBEPTHREAD_LIB}
 +s6-alias-chpst: src/alias/s6-alias-chpst.o ${LIBNSSS}
@@ -171,7 +171,7 @@ diff -rupN s6-2.14.0.0/package/deps.mak s6-2.14.0.0b/package/deps.mak
 +s6-instance-create: src/instance/s6-instance-create.o ${LIBS6}
 +s6-instance-delete: EXTRA_LIBS := -lskarnet ${SYSCLOCK_LIB}
 +s6-instance-delete: src/instance/s6-instance-delete.o ${LIBS6}
-+s6-instance-list: EXTRA_LIBS :=-lskarnet
++s6-instance-list: EXTRA_LIBS := -lskarnet
 +s6-instance-list: src/instance/s6-instance-list.o ${LIBS6}
 +s6-instance-maker: EXTRA_LIBS := -lskarnet
 +s6-instance-maker: src/instance/s6-instance-maker.o libs6auto.a.xyzzy
