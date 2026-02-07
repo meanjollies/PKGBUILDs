@@ -1,0 +1,4 @@
+[dnsperf]
+source = 'git'
+git = 'https://codeberg.org/DNS-OARC/dnsperf.git'
+prefix = 'v'
