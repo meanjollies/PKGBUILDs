@@ -3,35 +3,30 @@
 # Contributor: Carsten Feuls <archlinux@carstenfeuls.de>
 
 pkgname=klog
-pkgver=2.4.3
+pkgver=2.5
 pkgrel=1
 pkgdesc='A multiplatform free hamradio logger'
 arch=('x86_64')
 url="https://github.com/ea4k/${pkgname}"
 license=('GPL-3.0-only')
-makedepends=('qt6-tools' 'gendesk')
+makedepends=('qt6-tools')
 depends=('qt6-base' 'qt6-charts' 'qt6-declarative' 'qt6-location' 'qt6-serialport' 'hamlib')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('a478c5f619cf393525ae9a6e1c3187c9ee97f751f96a27c8c972367d2075828f')
-
-prepare() {
-  cd "${pkgname}-${pkgver}"
-
-  gendesk --pkgname "${pkgname}" --pkgdesc "${pkgdesc}" --exec "/usr/bin/${pkgname}" -n
-}
+sha256sums=('a30f6bb49f0fb945ceaa23df397d89a868abc4e0272482e2e94a1e9ab993ea46')
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  local cmake_options=(
+    -B build
+    -S "${pkgname}-${pkgver}"
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+  )
 
-  qmake6 PREFIX=/usr src/src.pro
-  make
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-  cd "${pkgname}-${pkgver}"
-
-  install -Dm755 build/target/klog "${pkgdir}/usr/bin/klog"
-  install -Dm644 src/klog.1 "${pkgdir}/usr/share/man/man1/klog.1"
-  install -Dm644 src/img/${pkgname}_512x512.png "${pkgdir}/usr/share/pixmaps/${pkgname}.png"
-  install -Dm644 ${pkgname}.desktop "${pkgdir}/usr/share/applications/${pkgname}.desktop"
+  DESTDIR="${pkgdir}" cmake --install build
 }
