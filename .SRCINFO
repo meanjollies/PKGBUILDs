@@ -1,5 +1,5 @@
 pkgbase = dnsperf
-	pkgdesc = Tools that measure performance of authoritative Domain Name services
+	pkgdesc = Tools that gather accurate latency and throughput metrics for the Domain Name Service (DNS).
 	pkgver = 2.15.0
 	pkgrel = 1
 	url = https://www.dns-oarc.net/tools/dnsperf
@@ -10,6 +10,6 @@ pkgbase = dnsperf
 	depends = libnghttp2
 	depends = json-c
 	source = https://www.dns-oarc.net/files/dnsperf/dnsperf-2.15.0.tar.gz
-	b2sums = a2acfbfca1843372291a8c87bc542743f0ecbe02bfc68c54f38b8c18a8cd81ffc59aa4fd2952f81ce52de06a86b6cc52acb3ffc2f543f068e0acb3f2363fab79
+	sha256sums = 3dc72200a59e71c47409abfd5613aad4d24d89c310033abfdb230cdcca599277
 
 pkgname = dnsperf
