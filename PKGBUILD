@@ -1,10 +1,10 @@
-# Maintainer: Michał Wojdyła < micwoj9292 at gmail dot com >
-# Contributor:  Andrew O'Neill <andrew at haunted dot sh>
+# Maintainer:  Andrew O'Neill <andrew at haunted dot sh>
+# Contributor: Michał Wojdyła < micwoj9292 at gmail dot com >
 # Contributor: Clint Valentine <valentine.clint@gmail.com>
 
 pkgname=mosdepth
 pkgver=0.3.13
-pkgrel=1
+pkgrel=2
 pkgdesc='Fast BAM/CRAM depth calculation for WGS, exome, or targeted sequencing'
 arch=('x86_64')
 url="https://github.com/brentp/${pkgname}"
@@ -16,7 +16,8 @@ sha256sums=('db120c279577c232305e51fbd48704ab75f235615e5df2a8eb6a327be5d42aca')
 
 build() {
   cd "${pkgname}-${pkgver}"
-  nimble build -y --passC:-Wno-error=incompatible-pointer-types
+
+  nimble build -y -d:release --passC:-Wno-error=incompatible-pointer-types
 }
 
 package() {
