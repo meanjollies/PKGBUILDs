@@ -4,7 +4,7 @@
 # Contributor: Angus Gibson <darthshrine@gmail.com>
 
 pkgname=ipbt
-pkgver=20240909.a852474
+pkgver=20260410.a852474
 pkgrel=1
 pkgdesc='A high-tech ttyrec player'
 arch=('x86_64')
@@ -14,27 +14,31 @@ depends=('ncurses' 'perl')
 makedepends=('cmake')
 source=("${url}/${pkgname}-${pkgver}.tar.gz"
         "${pkgname}.patch")
-sha256sums=('89d95b6c806461ac0dc2096732e266dfb288d08cd8cbe68df83cea9fe0895bfe'
-            '799d198e16f56e7575e761ec68cbd0e17334cf7ac9790439b7ae7115f84d554f')
+sha256sums=('0713f515794643d48c88e79429dc392741e2ae15093b8d92bfc189110228406a'
+            'a61024642f0d591307e0871693fa4677ee245c5e9d8b1d44f9159dc47b597225')
 
 prepare() {
   patch -p0 -i ../${pkgname}.patch
 }
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  local cmake_options=(
+    -B build
+    -S "${pkgname}-${pkgver}"
+    -W no-dev
+    -D CMAKE_BUILD_TYPE=Release
+    -D CMAKE_INSTALL_PREFIX=/usr
+  )
 
-  cmake -DCMAKE_INSTALL_PREFIX=/usr . 
-  make
+  cmake "${cmake_options[@]}"
+  cmake --build build
 }
 
 package() {
-  cd "${pkgname}-${pkgver}"
-
-  install -Dm755 ipbt "${pkgdir}/usr/bin/ipbt"
-  install -Dm755 ttydump "${pkgdir}/usr/bin/ttydump"
-  install -Dm755 ttygrep "${pkgdir}/usr/bin/ttygrep"
-  install -Dm644 ipbt.1 "${pkgdir}/usr/share/man/man1/ipbt.1"
-  install -Dm644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
+  DESTDIR="${pkgdir}" cmake --install build
+  
+  install -Dm755 "${srcdir}/${pkgname}-${pkgver}/ttydump" "${pkgdir}/usr/bin/ttydump"
+  install -Dm755 "${srcdir}/${pkgname}-${pkgver}/ttygrep" "${pkgdir}/usr/bin/ttygrep"
+  install -Dm644 "${srcdir}/${pkgname}-${pkgver}/ipbt.1" "${pkgdir}/usr/share/man/man1/ipbt.1"
+  install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENCE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
 }
-
