@@ -5,15 +5,15 @@
 # Contributor: Antoine Lubineau <antoine@lubignon.info>
 
 pkgname=dnsperf
-pkgver=2.15.0
+pkgver=2.15.1
 pkgrel=1
-pkgdesc='Tools that gather accurate latency and throughput metrics for the Domain Name Service (DNS).'
+pkgdesc='Tools that gather accurate latency and throughput metrics for the Domain Name Service (DNS)'
 arch=('x86_64')
 url='https://www.dns-oarc.net/tools/dnsperf'
 license=('Apache-2.0')
 depends=('ldns' 'libck' 'libnghttp2' 'json-c')
 source=("https://www.dns-oarc.net/files/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('3dc72200a59e71c47409abfd5613aad4d24d89c310033abfdb230cdcca599277')
+sha256sums=('4d64264fe407057b5b84d6a2c4c7632cf9b84fe0aeebe8989d1017fb1b5f87b5')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
