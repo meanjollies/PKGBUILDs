@@ -3,7 +3,7 @@
 
 pkgname=regina-normal
 pkgver=7.4.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Software for low-dimensional topology'
 arch=('x86_64')
 url='https://regina-normal.github.io'
@@ -15,6 +15,10 @@ optdepends=('doxygen: Generate C++/Python API docs'
             'libxslt: Generate the user handbook')
 source=("https://github.com/${pkgname}/regina/archive/regina-${pkgver}.tar.gz")
 sha256sums=('fc5db92a1c92f19dbbc9ca58ba37881b5cfbe9bc38736dad05ee767d98957803')
+
+prepare() {
+  sed -i '31i\#include <cstdint>' "regina-regina-${pkgver}/engine/link/knotplot.cpp"
+}
 
 build() {
   local cmake_options=(
