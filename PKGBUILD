@@ -3,7 +3,7 @@
 # Contributor: Josh VanderLinden <arch@cloudlery.com>
 
 pkgname=execline
-pkgver=2.9.8.1
+pkgver=2.9.9.1
 pkgrel=1
 pkgdesc='A (non-interactive) scripting language, like sh'
 arch=('x86_64')
@@ -13,8 +13,8 @@ depends=('skalibs')
 options=('!lto' '!debug')
 source=("${url}/${pkgname}-${pkgver}.tar.gz"
         "${pkgname}.patch")
-sha256sums=('23350d10797909636060522607591cb4a2118328cb58c5e65fb19a2c0d47264e'
-            '573ac71eb3e754ec32ea9a5ba8621ab0c8617baf0f1285254f7056588580eb99')
+sha256sums=('be63533297a93c36fd267195117b4e668687a526f834517a8db47d85b6c7ec6a'
+            '45302cf9f817f1c8f2675a1e972454e630411c1fdabe208e0d43ba4c807afa3e')
 
 prepare() {
   patch -p0 -i ../${pkgname}.patch
