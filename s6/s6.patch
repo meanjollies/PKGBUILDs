@@ -1,7 +1,7 @@
-diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
---- s6-2.14.0.1/package/deps.mak	2025-11-04 16:44:09.000000000 -0500
-+++ s6-2.14.0.1b/package/deps.mak	2026-01-25 10:44:20.243691059 -0500
-@@ -148,92 +148,92 @@ src/supervision/s6_svlisten_loop.o src/s
+diff -rupN s6-2.15.0.0/package/deps.mak s6-2.15.0.0b/package/deps.mak
+--- s6-2.15.0.0/package/deps.mak	2026-04-05 13:30:23.000000000 -0400
++++ s6-2.15.0.0b/package/deps.mak	2026-05-11 19:14:09.139592734 -0400
+@@ -143,92 +143,92 @@ src/supervision/s6_svlisten_loop.o src/s
  src/supervision/s6_svlisten_signal_handler.o src/supervision/s6_svlisten_signal_handler.lo: src/supervision/s6_svlisten_signal_handler.c src/supervision/s6-svlisten.h
  src/usertree/s6-usertree-maker.o src/usertree/s6-usertree-maker.lo: src/usertree/s6-usertree-maker.c src/include/s6/auto.h src/include/s6/config.h
  
@@ -92,7 +92,7 @@ diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
 -s6-instance-status: EXTRA_LIBS :=
 -s6-instance-status: src/instance/s6-instance-status.o -lskarnet
 +s6-alias: EXTRA_LIBS := -lskarnet
-+s6-alias: src/alias/s6-alias.o
++s6-alias: src/alias/s6-alias.o 
 +s6-alias-chpst: EXTRA_LIBS := -lskarnet ${MAYBEPTHREAD_LIB}
 +s6-alias-chpst: src/alias/s6-alias-chpst.o ${LIBNSSS}
 +s6-alias-sv: EXTRA_LIBS := -lskarnet ${SPAWN_LIB}
@@ -178,18 +178,14 @@ diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
 +s6-instance-status: EXTRA_LIBS := -lskarnet
 +s6-instance-status: src/instance/s6-instance-status.o
  ifeq ($(strip $(STATIC_LIBS_ARE_PIC)),)
- libs6.a.xyzzy: src/libs6/ftrigr1_zero.o src/libs6/ftrigr_check.o src/libs6/ftrigr_checksa.o src/libs6/ftrigr_ack.o src/libs6/ftrigr_end.o src/libs6/ftrigr_start.o src/libs6/ftrigr_startf.o src/libs6/ftrigr_subscribe.o src/libs6/ftrigr_unsubscribe.o src/libs6/ftrigr_update.o src/libs6/ftrigr_updateb.o src/libs6/ftrigr_wait_and.o src/libs6/ftrigr_wait_or.o src/libs6/ftrigr_zero.o src/libs6/ftrigw_clean.o src/libs6/ftrigw_fifodir_make.o src/libs6/ftrigw_notify.o src/libs6/ftrigw_notifyb.o src/libs6/ftrigw_notifyb_nosig.o src/libs6/s6_accessrules_backend_cdb.o src/libs6/s6_accessrules_backend_fs.o src/libs6/s6_accessrules_keycheck_ip4.o src/libs6/s6_accessrules_keycheck_ip6.o src/libs6/s6_accessrules_keycheck_reversedns.o src/libs6/s6_accessrules_keycheck_uidgid.o src/libs6/s6_accessrules_params_free.o src/libs6/s6_accessrules_uidgid_cdb.o src/libs6/s6_accessrules_uidgid_fs.o src/libs6/s6_compat_el_semicolon.o src/libs6/s6_dtally_pack.o src/libs6/s6_dtally_unpack.o src/libs6/s6_dtally_read.o src/libs6/s6_dtally_write.o src/libs6/s6_instance_chdirservice.o src/libs6/s6_servicedir_file_list.o src/libs6/s6_servicedir_instances_recreate_offline.o src/libs6/s6_servicedir_instances_recreate_offline_tmp.o src/libs6/s6_svc_ok.o src/libs6/s6_svc_write.o src/libs6/s6_svc_writectl.o src/libs6/s6_svstatus_pack.o src/libs6/s6_svstatus_read.o src/libs6/s6_svstatus_unpack.o src/libs6/s6_svstatus_write.o src/libs6/s6_fdholder_delete.o src/libs6/s6_fdholder_delete_async.o src/libs6/s6_fdholder_end.o src/libs6/s6_fdholder_getdump.o src/libs6/s6_fdholder_list.o src/libs6/s6_fdholder_list_async.o src/libs6/s6_fdholder_list_cb.o src/libs6/s6_fdholder_retrieve.o src/libs6/s6_fdholder_retrieve_async.o src/libs6/s6_fdholder_retrieve_cb.o src/libs6/s6_fdholder_setdump.o src/libs6/s6_fdholder_start.o src/libs6/s6_fdholder_store.o src/libs6/s6_fdholder_store_async.o src/libs6/s6_supervise_link.o src/libs6/s6_supervise_link_names.o src/libs6/s6_supervise_unlink.o src/libs6/s6_supervise_unlink_names.o
+ libs6.a.xyzzy: src/libs6/ftrigr_ack.o src/libs6/ftrigr_end.o src/libs6/ftrigr_peek.o src/libs6/ftrigr_release.o src/libs6/ftrigr_start.o src/libs6/ftrigr_startf.o src/libs6/ftrigr_subscribe.o src/libs6/ftrigr_unsubscribe.o src/libs6/ftrigr_update.o src/libs6/ftrigr_wait_and.o src/libs6/ftrigr_wait_or.o src/libs6/ftrigw_clean.o src/libs6/ftrigw_fifodir_make.o src/libs6/ftrigw_notify.o src/libs6/ftrigw_notifyb.o src/libs6/ftrigw_notifyb_nosig.o src/libs6/s6_accessrules_backend_cdb.o src/libs6/s6_accessrules_backend_fs.o src/libs6/s6_accessrules_keycheck_ip4.o src/libs6/s6_accessrules_keycheck_ip6.o src/libs6/s6_accessrules_keycheck_reversedns.o src/libs6/s6_accessrules_keycheck_uidgid.o src/libs6/s6_accessrules_params_free.o src/libs6/s6_accessrules_uidgid_cdb.o src/libs6/s6_accessrules_uidgid_fs.o src/libs6/s6_compat_el_semicolon.o src/libs6/s6_dtally_pack.o src/libs6/s6_dtally_unpack.o src/libs6/s6_dtally_read.o src/libs6/s6_dtally_write.o src/libs6/s6_instance_chdirservice.o src/libs6/s6_servicedir_file_list.o src/libs6/s6_servicedir_instances_recreate_offline.o src/libs6/s6_servicedir_instances_recreate_offline_tmp.o src/libs6/s6_svc_ok.o src/libs6/s6_svc_write.o src/libs6/s6_svc_writectl.o src/libs6/s6_svstatus_pack.o src/libs6/s6_svstatus_read.o src/libs6/s6_svstatus_unpack.o src/libs6/s6_svstatus_write.o src/libs6/s6_fdholder_delete.o src/libs6/s6_fdholder_delete_async.o src/libs6/s6_fdholder_end.o src/libs6/s6_fdholder_getdump.o src/libs6/s6_fdholder_list.o src/libs6/s6_fdholder_list_async.o src/libs6/s6_fdholder_list_cb.o src/libs6/s6_fdholder_retrieve.o src/libs6/s6_fdholder_retrieve_async.o src/libs6/s6_fdholder_retrieve_cb.o src/libs6/s6_fdholder_setdump.o src/libs6/s6_fdholder_start.o src/libs6/s6_fdholder_store.o src/libs6/s6_fdholder_store_async.o src/libs6/s6_supervise_link.o src/libs6/s6_supervise_link_names.o src/libs6/s6_supervise_unlink.o src/libs6/s6_supervise_unlink_names.o
  else
-@@ -254,58 +254,58 @@ libs6auto.so.xyzzy: EXTRA_LIBS := -lexec
+@@ -249,58 +249,58 @@ libs6auto.so.xyzzy: EXTRA_LIBS := -lexec
  libs6auto.so.xyzzy:src/libs6/s6_auto_write_logger.lo src/libs6/s6_auto_write_logger_tmp.lo src/libs6/s6_auto_write_logrun.lo src/libs6/s6_auto_write_logrun_tmp.lo src/libs6/s6_auto_write_service.lo
  libs6auto.dylib.xyzzy: EXTRA_LIBS := -lexecline -lskarnet
  libs6auto.dylib.xyzzy:src/libs6/s6_auto_write_logger.lo src/libs6/s6_auto_write_logger_tmp.lo src/libs6/s6_auto_write_logrun.lo src/libs6/s6_auto_write_logrun_tmp.lo src/libs6/s6_auto_write_service.lo
--s6-ftrigrd: EXTRA_LIBS := ${SOCKET_LIB} ${SYSCLOCK_LIB}
--s6-ftrigrd: src/libs6/s6-ftrigrd.o src/libs6/ftrig1_free.o src/libs6/ftrig1_make.o -lskarnet
--s6lockd: EXTRA_LIBS := ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
--s6lockd: src/libs6/s6lockd.o -lskarnet
--s6lockd-helper: EXTRA_LIBS :=
--s6lockd-helper: src/libs6/s6lockd-helper.o libs6lockd.a.xyzzy -lskarnet
+-s6-ftrigrd: EXTRA_LIBS := ${SYSCLOCK_LIB}
+-s6-ftrigrd: src/libs6/s6-ftrigrd.o -lskarnet
 -s6-cleanfifodir: EXTRA_LIBS :=
 -s6-cleanfifodir: src/pipe-tools/s6-cleanfifodir.o ${LIBS6} -lskarnet
 -s6-ftrig-listen: EXTRA_LIBS := ${EXECLINE_LIB} ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
@@ -204,6 +200,10 @@ diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
 -s6-mkfifodir: src/pipe-tools/s6-mkfifodir.o ${LIBS6} -lskarnet
 -s6-background-watch: EXTRA_LIBS := ${SPAWN_LIB} ${KEVENTPTHREAD_LIB}
 -s6-background-watch: src/supervision/s6-background-watch.o -lskarnet
+-s6-notify-fd-from-socket: EXTRA_LIBS := ${SOCKET_LIB} ${SYSCLOCK_LIB}
+-s6-notify-fd-from-socket: src/supervision/s6-notify-fd-from-socket.o -lskarnet
+-s6-notify-socket-from-fd: EXTRA_LIBS := ${SOCKET_LIB} ${SYSCLOCK_LIB}
+-s6-notify-socket-from-fd: src/supervision/s6-notify-socket-from-fd.o -lskarnet
 -s6-notifyoncheck: EXTRA_LIBS := ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
 -s6-notifyoncheck: src/supervision/s6-notifyoncheck.o ${LIBS6} -lskarnet
 -s6-permafailon: EXTRA_LIBS := ${SYSCLOCK_LIB}
@@ -238,12 +238,8 @@ diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
 -s6-svwait: src/supervision/s6-svwait.o src/supervision/s6_svlisten_loop.o ${LIBS6} -lskarnet
 -s6-usertree-maker: EXTRA_LIBS :=
 -s6-usertree-maker: src/usertree/s6-usertree-maker.o libs6auto.a.xyzzy -lskarnet
-+s6-ftrigrd: EXTRA_LIBS := -lskarnet ${SOCKET_LIB} ${SYSCLOCK_LIB}
-+s6-ftrigrd: src/libs6/s6-ftrigrd.o src/libs6/ftrig1_free.o src/libs6/ftrig1_make.o
-+s6lockd: EXTRA_LIBS := -lskarnet ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
-+s6lockd: src/libs6/s6lockd.o
-+s6lockd-helper: EXTRA_LIBS := -lskarnet
-+s6lockd-helper: src/libs6/s6lockd-helper.o libs6lockd.a.xyzzy
++s6-ftrigrd: EXTRA_LIBS := -lskarnet ${SYSCLOCK_LIB}
++s6-ftrigrd: src/libs6/s6-ftrigrd.o
 +s6-cleanfifodir: EXTRA_LIBS := -lskarnet
 +s6-cleanfifodir: src/pipe-tools/s6-cleanfifodir.o ${LIBS6}
 +s6-ftrig-listen: EXTRA_LIBS := -lskarnet ${EXECLINE_LIB} ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
@@ -258,6 +254,10 @@ diff -rupN s6-2.14.0.1/package/deps.mak s6-2.14.0.1b/package/deps.mak
 +s6-mkfifodir: src/pipe-tools/s6-mkfifodir.o ${LIBS6}
 +s6-background-watch: EXTRA_LIBS := -lskarnet ${SPAWN_LIB} ${KEVENTPTHREAD_LIB}
 +s6-background-watch: src/supervision/s6-background-watch.o
++s6-notify-fd-from-socket: EXTRA_LIBS := -lskarnet ${SOCKET_LIB} ${SYSCLOCK_LIB}
++s6-notify-fd-from-socket: src/supervision/s6-notify-fd-from-socket.o
++s6-notify-socket-from-fd: EXTRA_LIBS := -lskarnet ${SOCKET_LIB} ${SYSCLOCK_LIB}
++s6-notify-socket-from-fd: src/supervision/s6-notify-socket-from-fd.o
 +s6-notifyoncheck: EXTRA_LIBS := -lskarnet ${SOCKET_LIB} ${SYSCLOCK_LIB} ${SPAWN_LIB}
 +s6-notifyoncheck: src/supervision/s6-notifyoncheck.o ${LIBS6}
 +s6-permafailon: EXTRA_LIBS := -lskarnet ${SYSCLOCK_LIB}
