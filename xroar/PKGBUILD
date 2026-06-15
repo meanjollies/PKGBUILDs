@@ -5,12 +5,12 @@
 
 pkgname=xroar
 pkgver=1.11
-pkgrel=1
+pkgrel=2
 pkgdesc='A Dragon and Tandy CoCo emulator'
 arch=('x86_64')
 license=('GPL-3.0-or-later')
 url="https://www.6809.org.uk/${pkgname}"
-depends=('gtk2' 'sdl2' 'libgl' 'libsndfile' 'gtkglext')
+depends=('gtk3' 'sdl2' 'libgl' 'libsndfile')
 makedepends=('gendesk')
 install=${pkgname}.install
 source=("${url}/dl/${pkgname}-${pkgver}.tar.gz"
