@@ -6,14 +6,20 @@
 
 pkgname=afnix
 pkgver=4.0.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Multi-threaded functional programming language'
 arch=('x86_64')
 url='http://www.afnix.org'
 license=('LicenseRef-AFNIX')
 depends=('ncurses' 'gcc-libs')
-source=("${url}/ftp/afnix-src-${pkgver}.tgz")
-sha256sums=('8b971594990aafab02f7dca3750485142facdfcf00827f6a7ac1409784c9752e')
+source=("${url}/ftp/afnix-src-${pkgver}.tgz"
+        "gcc16-fixes.patch")
+sha256sums=('8b971594990aafab02f7dca3750485142facdfcf00827f6a7ac1409784c9752e'
+            'ca92521f39f2486f4d9a63a8eecccb4219ab244a9f6d5fd56aa2946849d35ec1')
+
+prepare() {
+  patch -p0 -i ../gcc16-fixes.patch
+}
 
 build() {
   cd "${pkgname}-src-${pkgver}"
